@@ -5,7 +5,7 @@ const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 const config = {
-  entry: [path.join(__dirname, '/src/app/app.js')],
+  entry: [path.join(__dirname, '/src/app/index.js')],
   devtool: 'source-map',
   output: {
     path: buildPath,
@@ -27,7 +27,6 @@ const config = {
       {from: 'www'},
     ], path.resolve(__dirname, 'src')),
   ],
-  target: 'electron',
   module: {
     loaders: [
       {

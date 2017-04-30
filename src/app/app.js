@@ -1,12 +1,22 @@
-import React from 'react';
-import {render} from 'react-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import Main from './Main'; // Our custom react component
+import React, {Component} from 'react'
+import Header from './components/Header'
 
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
+export class App extends Component{
+  constructor(props) {
+    super(props)
+    this.state = {
+      local: 'en-US',
+      theme: 'light'
+    }
+  }
+  render(){
+    return(
+      <div>
+        <Header />
+        {this.props.children}
+      </div>
+    )
+  }
+}
 
-// Render the main app react component into the app div.
-// For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-render(<Main />, document.getElementById('app'));
+export default App
