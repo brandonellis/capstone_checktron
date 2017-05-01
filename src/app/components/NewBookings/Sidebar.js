@@ -34,11 +34,13 @@ export class Sidebar extends Component{
     hashHistory.push(path)
   }
   setStart(start){
+    var end = parseInt(start) > parseInt(this.props.end) ? start : this.props.end
     var path = pStr[0] + start + pStr[1] + this.props.end + pStr[2] + this.props.category
     hashHistory.push(path)
   }
   setEnd(end){
-    var path = pStr[0] + this.props.start + pStr[1] + end + pStr[2] + this.props.category
+    var start = parseInt(this.props.start) > parseInt(end) ? end : this.props.start
+    var path = pStr[0] + start + pStr[1] + end + pStr[2] + this.props.category
     hashHistory.push(path)
   }
   render(){

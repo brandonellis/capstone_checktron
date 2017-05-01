@@ -5,6 +5,18 @@ import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import {getCategoryNames} from '../../utils/apiHelper'
 
+const style = {
+  btn:{
+    width: '100%'
+  },
+  btnText: {
+    float: 'left'
+  },
+  btnCaret: {
+    marginTop: 9,
+    float: 'right'
+  }
+}
 /*
   PROPS:
     function setCategory,
@@ -48,11 +60,15 @@ export class CategorySelect extends Component {
 
   render() {
     return (
-      <div>
-        <RaisedButton
+      <div style={{marginBottom: 10}}>
+        <button style={style.btn} className="btn btn-default drop"
           onTouchTap={this.handleTouchTap.bind(this)}
-          label={this.getCategoryName(this.props.category)}
-        />
+        >
+          <span style={style.btnText}>
+            {this.getCategoryName(this.props.category)}
+          </span>
+          <span style={style.btnCaret} className="caret"></span>
+        </button>
         <Popover
           open={this.state.open}
           anchorEl={this.state.anchorEl}
@@ -60,7 +76,7 @@ export class CategorySelect extends Component {
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={this.handleRequestClose.bind(this)}
         >
-          <Menu>
+          <Menu autoWidth={false} listStyle={{width: 218}}>
             {this.state.categories.map(category=>{
               return(
                 <MenuItem

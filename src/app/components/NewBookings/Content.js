@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
 import {getItemList} from '../../utils/apiHelper'
-import {config} from '../../config/config'
+import Image from './Image'
 import moment from 'moment'
 
 // in two files > ./Sidebar
 const sidebarWidth = 250;
 
 const style = {
+  container:{
+    overflowY: 'scroll',
+    position: 'fixed',
+    top: 60,
+    left: 250,
+    bottom: 0,
+    right: 0
+  },
   content: {
-    marginLeft: sidebarWidth,
+    //marginLeft: sidebarWidth,
     paddingLeft: 15,
     paddingRight: 15,
     position: 'relative'
@@ -26,6 +34,17 @@ const style = {
     paddingBottom: 5,
     paddingRight: 8,
   },
+  col1: {
+
+  },
+  col2: {
+    textAlign: 'right',
+    width: '30%'
+  },
+  col3: {
+    textAlign: 'center',
+    width: '1%'
+  }
 }
 
 export class Content extends Component{
@@ -62,8 +81,12 @@ export class Content extends Component{
   itemTable(){
     if(this.state != null){
       return(
-        <table>
-        <thead><tr><th>Item</th><th>Price</th><th>Status</th></tr></thead>
+        <table style={{maxWidth: 1365}}>
+          <thead><tr>
+            <th style={style.col1}>Item</th>
+            <th style={style.col2}>Price</th>
+            <th style={style.col3}>Status</th>
+          </tr></thead>
           <tbody>
             {this.state.items.map((item) => {
               var price = item.price
@@ -78,24 +101,18 @@ export class Content extends Component{
               }
               return (
                 <tr key={item.id}>
-                  <td>
-                    {(()=>{
-                      if(typeof(item.image) === 'object'){
-                        for(var key in item.image){
-                          return (
-                            <div>
-                              <img src={config.api.base + "media/S" + item.image[key].src + ".jpg"}/>
-                            </div>
-                          )
-                        }
-                      }
-                    })()}
-                    <h2>{item.name}</h2>
-                    <em>{item.sku}</em>
+                  <td style={style.col1}>
+                    <a href='#' onClick={e=>e.preventDefault()} style={{paddingBottom: 6, display: 'block'}}>
+                      <Image image={item.image}/>
+                      <div style={{display: 'inline-block', paddingLeft: 6, paddingBottom: 4, color: '#000'}}>
+                        <h2 style={{marginTop: 5, marginBottom: 0}}>{item.name}</h2>
+                        <em>{item.sku}</em>
+                      </div>
+                    </a>
                   </td>
-                  <td>{price}</td>
-                  <td>
-                    <div className={item.status}>
+                  <td style={style.col2}>{price}</td>
+                  <td style={style.col3}>
+                    <div className={'ct-item-status ' + item.status}>
                       {item.avail}
                     </div>
                   </td>
@@ -111,13 +128,15 @@ export class Content extends Component{
   }
   render(){
     return(
-      <div style={style.content}>
-        <h1>
-          New Booking:
-          &nbsp;&nbsp;
-          {this.date()}
-        </h1>
-        {this.itemTable()}
+      <div style={style.container}>
+        <div style={style.content}>
+          <h1>
+            New Booking:
+            &nbsp;&nbsp;
+            {this.date()}
+          </h1>
+          {this.itemTable()}
+        </div>
       </div>
     )
   }

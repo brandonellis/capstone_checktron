@@ -18,20 +18,23 @@ function link(path){
 
 export class MainNavigation extends Component{
   render(){
+    // Math.random() can introduce bugs
+    // same number causes menu to stay open, no rerender
+    // two components with same key causses error, duplacet key
     return(
       <div style={style.navbar}>
         <div style={style.navbarLeft}>
           <a style={style.navbarItem} className='ct-nav-item' href='#'>
-            <img style={style.navbarImage} src='/images/checkfront-main-nav-mini-logo.png' />
+            <img style={style.navbarImage} src='/images/logo.png' />
           </a>
-          <Dropdown label="Booking">
+          <Dropdown label="Booking" key={Math.random()}>
             <Menu desktop={true} width={256}>
               <MenuItem primaryText="Index" secondaryText={modifierKey + 'I'} onTouchTap={link('index')} />
               <Divider />
               <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'N'} onTouchTap={link('booking')} />
             </Menu>
           </Dropdown>
-          <Dropdown label="Dev">
+          <Dropdown label="Dev" key={Math.random()}>
             <Menu desktop={true} width={256}>
               <MenuItem primaryText="Index" onTouchTap={link('index')} />
               <MenuItem primaryText="New Booking" onTouchTap={link('booking')} />

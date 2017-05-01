@@ -10,7 +10,47 @@ ul {
     padding: 0;
 }
 
+h1 {
+  font-weight: 700;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  padding: 0 0 0.5em 0;
+}
 /*** :lazy ***/
 .ct-nav-item-open, .ct-nav-item:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+/*** tables ***/
+table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 6px;
+}
+/*** item status ***/
+.ct-item-status {
+    text-align: center;
+    color: black;
+    background-color: #f28282;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 3px 4px;
+}
+.ct-item-status.AVAILABLE {
+    background-color: #d4f296;
 }
