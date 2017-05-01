@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './components/Header'
+import MainNavigation from './components/Nav/MainNavigation'
 
 export class App extends Component{
   constructor(props) {
@@ -11,10 +14,12 @@ export class App extends Component{
   }
   render(){
     return(
-      <div>
-        <Header />
-        {this.props.children}
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <div>
+          <MainNavigation />
+          {this.props.children}
+        </div>
+      </MuiThemeProvider>
     )
   }
 }
