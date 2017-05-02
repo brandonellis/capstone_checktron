@@ -15,17 +15,18 @@ export class Image extends Component{
   getSrc(){
     if(typeof(this.props.image) === 'object'){
       for(var key in this.props.image){
-        return <img
-          src={config.api.base + "media/S" + this.props.image[key].src + ".jpg"}
-          style={{width: '100%'}}
-        />
+        return config.api.base + "media/S" + this.props.image[key].src + ".jpg"
       }
     }
+    return 'images/Checkfront.jpg'
   }
   render(){
     return (
       <Paper style={style} zDepth={2}>
-        {this.getSrc()}
+      <img
+        src={this.getSrc()}
+        style={{width: '100%'}}
+      />
       </Paper>
     )
   }

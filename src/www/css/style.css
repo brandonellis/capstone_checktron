@@ -1,49 +1,55 @@
-/* Clean CSS */
+/*** Clean CSS ***/
 body {
     margin: 0px;
     padding-top: 60px;
 }
-
+* {
+  user-select: none;
+}
+input {
+  user-select: auto;
+}
 ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-
 h1 {
   font-weight: 700;
   font-size: 1.5em;
   margin-bottom: 10px;
 }
-
 h2 {
   font-weight: 500;
   font-size: 1.3em;
   margin-bottom: 10px;
   padding: 0 0 0.5em 0;
 }
-/*** :lazy ***/
+/*** END ***/
+
+/*** LAZY:hover <Nav /> ***/
 .ct-nav-item-open, .ct-nav-item:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
+/*** END ***/
+
 /*** tables ***/
 table, td, th {
     border: 1px solid #ddd;
     text-align: left;
 }
-
 table {
     border-collapse: collapse;
     width: 100%;
 }
-
 th, td {
     padding: 6px;
 }
-
 tr:hover{
   background-color: rgba(200, 200, 200, 0.3);
 }
+/*** END ***/
+
 /*** item status ***/
 .ct-item-status {
     text-align: center;
@@ -59,3 +65,21 @@ tr:hover{
 .ct-item-status.AVAILABLE {
     background-color: #d4f296;
 }
+/*** END ***/
+
+/*  scroll bar  */
+::-webkit-scrollbar {
+  width: 10px;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	border-radius: 10px;
+	background-color: #eee;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+	border-radius: 10px;
+  background: #ddd;
+}
+/*** END ***/
