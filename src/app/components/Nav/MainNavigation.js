@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
 import Dropdown from './Dropdown'
 import style from './style'
+const path = require('path')
 
 const mac = process.platform === 'darwin'
 const modifierKey = mac ? '&#8984;' : 'Ctrl + '
@@ -25,7 +26,7 @@ export class MainNavigation extends Component{
       <div style={style.navbar}>
         <div style={style.navbarLeft}>
           <a style={style.navbarItem} className='ct-nav-item' href='#'>
-            <img style={style.navbarImage} src='/images/logo.png' />
+            <img style={style.navbarImage} src='./images/logo.png' />
           </a>
           <Dropdown label="Booking" key={Math.random()}>
             <Menu desktop={true} width={256}>
@@ -34,12 +35,14 @@ export class MainNavigation extends Component{
               <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'N'} onTouchTap={link('booking')} />
             </Menu>
           </Dropdown>
+          {/*}
           <Dropdown label="Dev" key={Math.random()}>
             <Menu desktop={true} width={256}>
               <MenuItem primaryText="Index" onTouchTap={link('index')} />
               <MenuItem primaryText="New Booking" onTouchTap={link('booking')} />
             </Menu>
           </Dropdown>
+          {*/}
         </div>
         <div style={style.navbarLeft}>
         </div>

@@ -1,4 +1,9 @@
 import React, { Component } from 'react'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import CircularProgress from 'material-ui/CircularProgress'
+//import {render} from 'react-dom'
+import BookingDialog from './BookingDialog'
 import {getItemList} from '../../utils/apiHelper'
 import Image from './Image'
 import moment from 'moment'
@@ -21,19 +26,6 @@ const style = {
     paddingRight: 15,
     position: 'relative'
   },
-  status: {
-    textAlign: 'center',
-    color: 'black',
-    backgroundColor: '#d4f296',
-    borderRadius: 5,
-    textTransform: 'uppercase',
-    fontSize: '0.8em',
-    fontWeight: 'bold',
-    paddingTop: 5,
-    paddingLeft: 8,
-    paddingBottom: 5,
-    paddingRight: 8,
-  },
   col1: {
 
   },
@@ -44,10 +36,44 @@ const style = {
   col3: {
     textAlign: 'center',
     width: '1%'
-  }
+  },
+  center: {
+    marginTop: 0,
+    marginRight: 'auto',
+    marginBottom: 0,
+    marginLeft: 'auto',
+    display: 'block',
+  },
 }
 
 export class Content extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      open: false,
+      loading: true,
+      item: 0
+    }
+  }
+  handleOpen(item){
+    this.setState({open: true, loading: true, item: item})
+  }
+
+  handleClose(){
+    this.setState({open: false, loading: true})
+  }
+
+  handleBook(){
+    this.setState({open: false, loading: true})
+  }
+  content(){
+    if(this.state.loading){
+      //api call here, make sure the then(function) changes state to loaded
+      return <CircularProgress size={80} thickness={5} style={style.center} />
+    }else{
+      return this.props.item_id
+    }
+  }
   componentDidMount() {
     getItemList(
       this.props.start,
@@ -77,11 +103,10 @@ export class Content extends Component{
       )
     }
   }
-
   itemTable(){
-    if(this.state != null){
+    if(this.state.items != undefined && this.state.items.length > 0){
       return(
-        <table style={{maxWidth: 1365}}>
+        <table style={{maxWidth: 1365, marginBottom: 20}}>
           <thead><tr>
             <th style={style.col1}>Item</th>
             <th style={style.col2}>Price</th>
@@ -102,7 +127,14 @@ export class Content extends Component{
               return (
                 <tr key={item.id}>
                   <td style={style.col1}>
-                    <a href='#' onClick={e=>e.preventDefault()} style={{paddingBottom: 6, display: 'block'}}>
+                    <a
+                      href='#'
+                      onClick={e=>{
+                        e.preventDefault()
+                        this.handleOpen()
+                      }}
+                      style={{paddingBottom: 6, display: 'block'}}
+                    >
                       <Image image={item.image}/>
                       <div style={{display: 'inline-block', paddingLeft: 6, paddingBottom: 4, color: '#000'}}>
                         <h2 style={{marginTop: 5, marginBottom: 0}}>{item.name}</h2>
@@ -127,6 +159,19 @@ export class Content extends Component{
     }
   }
   render(){
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose.bind(this)}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onTouchTap={this.handleClose.bind(this)}
+      />,
+    ]
+
     return(
       <div style={style.container}>
         <div style={style.content}>
@@ -137,6 +182,16 @@ export class Content extends Component{
           </h1>
           {this.itemTable()}
         </div>
+        <div id='booking-dialog'></div>
+        <Dialog
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose.bind(this)}
+          contentStyle={{}}
+        >
+          {this.content()}
+        </Dialog>
       </div>
     )
   }
