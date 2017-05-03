@@ -4,7 +4,7 @@ import {config} from '../config/config.js'
 try{
 	var axios = require('axios').create(require('../config/api.js').api)
 }catch(err){
-	alert("Dev Error: missing api.js (checktron/jsx/config/api.).\n	export default {\n	  baseURL: 'https://<name>.checkfront.com/api/3.0/',\n	  auth: {\n	    username: '<token>',\n	    password: '<secret>'\n	  }\n	}")
+	console.log("Dev Error: missing api.js (checktron/jsx/config/api.).\n	export default {\n	  baseURL: 'https://<name>.checkfront.com/api/3.0/',\n	  auth: {\n	    username: '<token>',\n	    password: '<secret>'\n	  }\n	}")
 	var axios = require('axios').create({baseURL: config.api.hostname})
 }
 
@@ -17,6 +17,8 @@ export function getCategoryNames(func){
 		}
 		categoryNames.sort((a, b) => a.name.localeCompare(b.name))
     func(categoryNames)
+	}).catch(e => {
+		func([])
 	})
 }
 
@@ -44,5 +46,7 @@ export function getItemList(start, end, category, func){
 			})
 		}
 		func(itemList)
+	}).catch(e => {
+		func(null)
 	})
 }

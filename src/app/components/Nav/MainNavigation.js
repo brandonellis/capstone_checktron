@@ -26,7 +26,7 @@ export class MainNavigation extends Component{
       <div style={style.navbar}>
         <div style={style.navbarLeft}>
           <a style={style.navbarItem} className='ct-nav-item' href='#'>
-            <img style={style.navbarImage} src='./images/logo.png' />
+            <img style={style.navbarImage} src='images/logo.png' />
           </a>
           <Dropdown label="Booking" key={Math.random()}>
             <Menu desktop={true} width={256}>

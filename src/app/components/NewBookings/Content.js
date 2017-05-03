@@ -104,7 +104,15 @@ export class Content extends Component{
     }
   }
   itemTable(){
-    if(this.state.items != undefined && this.state.items.length > 0){
+    if(this.state.items === undefined){
+      return <CircularProgress size={112} thickness={7} style={style.center} />
+    }else if(this.state.items === null){
+      return(
+        <div className="alert alert-danger">
+          <strong>Could Not Connect</strong>
+        </div>
+      )
+    }else if(this.state.items.length > 0){
       return(
         <table style={{maxWidth: 1365, marginBottom: 20}}>
           <thead><tr>
@@ -155,7 +163,11 @@ export class Content extends Component{
         </table>
       )
     }else{
-      return <p className='alert'>Nothing</p>
+      return(
+        <div className="alert alert-warning">
+          <strong>No Available Items</strong>
+        </div>
+      )
     }
   }
   render(){

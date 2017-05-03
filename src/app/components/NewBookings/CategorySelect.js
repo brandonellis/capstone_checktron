@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
-import Popover from 'material-ui/Popover'
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import {getCategoryNames} from '../../utils/apiHelper'
@@ -75,6 +75,7 @@ export class CategorySelect extends Component {
           anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={this.handleRequestClose.bind(this)}
+          animation={PopoverAnimationVertical}
         >
           <Menu autoWidth={false} listStyle={{width: 218}}>
             {this.state.categories.map(category=>{
