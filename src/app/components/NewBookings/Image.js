@@ -3,7 +3,7 @@ import Paper from 'material-ui/Paper'
 import {config} from '../../config/config'
 
 const style = {
-  height: 60,
+  height: 'auto',
   width: 60,
   margin: 2,
   textAlign: 'center',
@@ -13,6 +13,7 @@ const style = {
 
 export class Image extends Component{
   getSrc(){
+    if(this.props.giftCert) return config.api.base + 'images/giftcertificate.png'
     if(typeof(this.props.image) === 'object'){
       for(var key in this.props.image){
         return config.api.base + "media/S" + this.props.image[key].src + ".jpg"
@@ -21,8 +22,12 @@ export class Image extends Component{
     return 'images/Checkfront.jpg'
   }
   render(){
+
     return (
-      <Paper style={style} zDepth={2}>
+      <Paper
+        style={style}
+        zDepth={2}
+      >
       <img
         src={this.getSrc()}
         style={{width: '100%'}}

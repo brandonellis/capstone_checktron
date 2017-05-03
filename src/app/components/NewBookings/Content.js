@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
 //import {render} from 'react-dom'
-import BookingDialog from './BookingDialog'
+import BookingDetails from './BookingDetails'
 import {getItemList} from '../../utils/apiHelper'
 import Image from './Image'
 import moment from 'moment'
@@ -51,28 +51,19 @@ export class Content extends Component{
     super(props)
     this.state = {
       open: false,
-      loading: true,
       item: 0
     }
   }
   handleOpen(item){
-    this.setState({open: true, loading: true, item: item})
+    this.setState({open: true, item: item})
   }
 
   handleClose(){
-    this.setState({open: false, loading: true})
+    this.setState({open: false})
   }
 
   handleBook(){
-    this.setState({open: false, loading: true})
-  }
-  content(){
-    if(this.state.loading){
-      //api call here, make sure the then(function) changes state to loaded
-      return <CircularProgress size={80} thickness={5} style={style.center} />
-    }else{
-      return this.props.item_id
-    }
+    this.setState({open: false})
   }
   componentDidMount() {
     getItemList(
@@ -83,7 +74,6 @@ export class Content extends Component{
     )
   }
   setItemsState(itemList){
-    //TODO: check list here
     this.setState({items: itemList})
   }
   date(){
@@ -139,11 +129,11 @@ export class Content extends Component{
                       href='#'
                       onClick={e=>{
                         e.preventDefault()
-                        this.handleOpen()
+                        this.handleOpen(item.id)
                       }}
                       style={{paddingBottom: 6, display: 'block'}}
                     >
-                      <Image image={item.image}/>
+                      <Image image={item.image} giftCert={item.giftCert} />
                       <div style={{display: 'inline-block', paddingLeft: 6, paddingBottom: 4, color: '#000'}}>
                         <h2 style={{marginTop: 5, marginBottom: 0}}>{item.name}</h2>
                         <em>{item.sku}</em>
@@ -200,9 +190,14 @@ export class Content extends Component{
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose.bind(this)}
-          contentStyle={{}}
+          autoScrollBodyContent={true}
+          contentStyle={{transform:''}}
         >
-          {this.content()}
+          <BookingDetails
+            item={this.state.item}
+            start_date={this.props.start}
+            end_date={this.props.end}
+          />
         </Dialog>
       </div>
     )

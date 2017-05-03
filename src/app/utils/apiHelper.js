@@ -42,11 +42,23 @@ export function getItemList(start, end, category, func){
 				total: (items[key].rate.summary.price != undefined ?
 					items[key].rate.summary.price.total : null),
 				image: items[key].image != undefined ?
-					items[key].image : null
+					items[key].image : null,
+				giftCert: items[key].type === 'GC'
 			})
 		}
 		func(itemList)
 	}).catch(e => {
+		func(null)
+	})
+}
+
+export function getItem(item, start, end, func){
+	axios.get(
+		'item/' + item + '?start_date=' + start + '&end_date=' + end
+	).then((resp)=>{
+		func(resp.data.item)
+	}).catch(e=>{
+		console.log(e)
 		func(null)
 	})
 }
