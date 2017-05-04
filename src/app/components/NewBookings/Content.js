@@ -161,7 +161,8 @@ export class Content extends Component{
     }
   }
   render(){
-    const actions = [
+
+    const actions = false/* [
       <FlatButton
         label="Cancel"
         primary={true}
@@ -173,7 +174,7 @@ export class Content extends Component{
         onTouchTap={this.handleClose.bind(this)}
       />,
     ]
-
+    */
     return(
       <div style={style.container}>
         <div style={style.content}>
@@ -197,6 +198,7 @@ export class Content extends Component{
             item={this.state.item}
             start_date={this.props.start}
             end_date={this.props.end}
+            close={this.handleClose.bind(this)}
           />
         </Dialog>
       </div>

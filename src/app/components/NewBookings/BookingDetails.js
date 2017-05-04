@@ -6,6 +6,12 @@ import CircularProgress from 'material-ui/CircularProgress'
 import {getItem} from '../../utils/apiHelper'
 import {mapObject} from '../../utils/helper'
 
+import PerDay from './BookItem/PerDay'
+import PerNight from './BookItem/PerNight'
+import PerTime from './BookItem/PerTime'
+import TimeSlots from './BookItem/TimeSlots'
+import GiftCertificate from './BookItem/GiftCertificate'
+
 const style = {
   center: {
     marginTop: 0,
@@ -13,16 +19,15 @@ const style = {
     marginBottom: 0,
     marginLeft: 'auto',
     display: 'block',
+    whiteSpace: 'pre-wrap'
   },
 }
 export default class BookingDetails extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      loading: true,
-      param: {}
-    }
+    this.state = {loading: true}
   }
+  /*
   setParam(param){
     this.setState((prevState) => {
       // Copy json, should be a better way to do this
@@ -33,22 +38,18 @@ export default class BookingDetails extends Component {
       return {param: nextParam}
     })
   }
+  */
   setItem(item){
-    var param = {}
-    if(item != null && typeof item.param === 'object'){
-      for(var key in item.param){
-        //skip if
-        if(item.param[key].hide != 0) continue
-        param[key] = item.param[key].qty
-      }
-    }
-    this.setState({'item': item, loading: false, param: param})
+    this.setState({'item': item, loading: false})
   }
+  /*
   paramFields(){
     if(this.state.item == null || typeof this.state.item.param !== 'object') return;
     return(
       <div>
         {mapObject(this.state.param, (key, value)=>{
+          alert(key)
+          if(key === 'qty' && this.item.stock > 1) return
           return(
             <div key={key}>
               <TextField
@@ -82,8 +83,58 @@ export default class BookingDetails extends Component {
       </div>
     )
   }
-  dateFeild(){
-
+  */
+  book(){
+    if(this.state.item.type === 'GC'){
+      return(
+        <div>
+          <GiftCertificate
+            item={this.state.item}
+            close={this.props.close}
+          />
+        </div>
+      )
+    }
+    if(this.state.item.unit === 'D'){
+      return(
+        <div>
+          <PerDay
+            item={this.state.item}
+            close={this.props.close}
+          />
+        </div>
+      )
+    }
+    if(this.state.item.unit === 'N'){
+      return(
+        <div>
+          <PerNight
+            item={this.state.item}
+            close={this.props.close}
+          />
+        </div>
+      )
+    }
+    if(this.state.item.unit === 'TS'){
+      return(
+        <div>
+          <TimeSlots
+            item={this.state.item}
+            close={this.props.close}
+          />
+        </div>
+      )
+    }
+    if((new RegExp('(?:10M|15M|20M|30M|H)')).test(this.state.item.unit)){
+      return(
+        <div>
+          <PerTime
+            item={this.state.item}
+            close={this.props.close}
+          />
+        </div>
+      )
+    }
   }
   render(){
     if(this.state.loading){
@@ -92,9 +143,7 @@ export default class BookingDetails extends Component {
     }else{
       return(
         <div style={style.center}>
-          {JSON.stringify(this.state.param)}
-          {this.timeField()}
-          {this.paramFields()}
+          {this.state.item && this.book()}
         </div>
       )
     }
