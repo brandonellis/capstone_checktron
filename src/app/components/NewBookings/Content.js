@@ -187,12 +187,10 @@ export class Content extends Component{
         </div>
         <div id='booking-dialog'></div>
         <Dialog
-          actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose.bind(this)}
           autoScrollBodyContent={true}
-          contentStyle={{transform:''}}
         >
           <BookingDetails
             item={this.state.item}

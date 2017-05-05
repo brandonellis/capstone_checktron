@@ -5,6 +5,11 @@ export default class PerDay extends Component{
     return(
       <div>
         PerDay
+        {
+          //if len is 0 Start :: Date
+          // if len is 0 End
+          //param, hide qty if stock is 1
+        }
       </div>
     )
   }

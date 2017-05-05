@@ -62,3 +62,19 @@ export function getItem(item, start, end, func){
 		func(null)
 	})
 }
+
+export function getItemSlip(item_id, start_date, end_date, start_time, end_time, timeslot, param, func){
+	var query = 'item/' + item_id + '?start_date=' + start_date
+	if(end_date !== null) query += '&end_date=' + end_date
+	if(start_time !== null) query += '&start_time=' + start_time
+	if(end_time !== null) query += '&end_time=' + end_time
+	if(timeslot !== null) query += '&timeslot=' + timeslot
+	for(var key in param) query += '&param[' + key + ']=' + param[key]
+	//console.log(query)
+	axios.get(query).then((resp)=>{
+		func(resp.data.item)
+	}).catch(e=>{
+		console.log(e)
+		func(null)
+	})
+}

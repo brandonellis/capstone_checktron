@@ -27,63 +27,12 @@ export default class BookingDetails extends Component {
     super(props)
     this.state = {loading: true}
   }
-  /*
-  setParam(param){
-    this.setState((prevState) => {
-      // Copy json, should be a better way to do this
-      var nextParam = JSON.parse(JSON.stringify(prevState.param))
-      for(var key in param){
-        nextParam[key] = Math.max(param[key], 0)
-      }
-      return {param: nextParam}
-    })
+  componentDidUpdate(){
+    window.dispatchEvent(new Event('resize'))
   }
-  */
   setItem(item){
     this.setState({'item': item, loading: false})
   }
-  /*
-  paramFields(){
-    if(this.state.item == null || typeof this.state.item.param !== 'object') return;
-    return(
-      <div>
-        {mapObject(this.state.param, (key, value)=>{
-          alert(key)
-          if(key === 'qty' && this.item.stock > 1) return
-          return(
-            <div key={key}>
-              <TextField
-                defaultValue={value}
-                floatingLabelText={this.state.item.param[key].lbl}
-                type="number"
-                onChange={((event, newValue)=>{
-                  var p = {}
-                  p[key] = newValue
-                  this.setParam(p)
-                }).bind(this)}
-              />
-            </div>
-          )
-        })}
-      </div>
-    )
-  }
-  timeField(){
-    if(this.state.item == null || typeof this.state.item.rate.dates[this.state.item.rate.start_date].timeslots !== 'object') return;
-    return(
-      <div>
-        <h1> pick time slot </h1>
-        {this.state.item.rate.dates[this.state.item.rate.start_date].timeslots.map(timeslot=>{
-          return(
-            <div key={timeslot.start_time}>
-              {timeslot.start_time}-{timeslot.end_time}
-            </div>
-          )
-        })}
-      </div>
-    )
-  }
-  */
   book(){
     if(this.state.item.type === 'GC'){
       return(
