@@ -12,18 +12,6 @@ import {time12To24, time24To12, mapObject} from '../../../utils/helper'
 import {getItemSlip} from '../../../utils/apiHelper'
 
 
-const style = {
-  center: {
-    marginTop: 0,
-    marginRight: 'auto',
-    marginBottom: 0,
-    marginLeft: 'auto',
-    display: 'block',
-    whiteSpace: 'pre-wrap'
-  },
-}
-
-
 export default class TimeSlots extends Component{
   constructor(props){
     super(props)
@@ -113,6 +101,21 @@ export default class TimeSlots extends Component{
       </div>
     )
   }
+  summary(){
+    if(this.state.item.rate.error != null){
+      return (
+        <div className="alert alert-warning">
+          {this.state.item.rate.error.title}
+        </div>
+      )
+    }
+    return(
+      <div>
+        {this.state.item.rate.summary.date + ': ' + this.state.item.rate.summary.price.total}
+        <div dangerouslySetInnerHTML={{ __html: this.state.item.rate.summary.details }} />
+      </div>
+    )
+  }
   render(){
     if(this.state.loading)
       getItemSlip(this.state.item_id, this.state.start_date, null, null, null, this.state.timeslot, this.state.param, this.setItem.bind(this))
@@ -128,10 +131,7 @@ export default class TimeSlots extends Component{
         {this.date()}
         {this.time()}
         {this.param()}
-        <div>
-          {this.state.item.rate.summary.date + ': ' + this.state.item.rate.summary.price.total}
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: this.state.item.rate.summary.details }} />
+        {this.summary()}
         <FlatButton
           label="Cancel"
           primary={true}
