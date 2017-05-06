@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
@@ -31,14 +33,17 @@ export default class BookingDetails extends Component {
     window.dispatchEvent(new Event('resize'))
   }
   setItem(item){
-    this.setState({'item': item, loading: false})
+    this.setState({item: item, child: item, loading: false})
+  }
+  setChild(child){
+    this.setState({child: child, loading: false})
   }
   book(){
     if(this.state.item.type === 'GC'){
       return(
         <div>
           <GiftCertificate
-            item={this.state.item}
+            item={this.state.child}
             close={this.props.close}
           />
         </div>
@@ -48,7 +53,7 @@ export default class BookingDetails extends Component {
       return(
         <div>
           <PerDay
-            item={this.state.item}
+            item={this.state.child}
             close={this.props.close}
           />
         </div>
@@ -58,7 +63,7 @@ export default class BookingDetails extends Component {
       return(
         <div>
           <PerNight
-            item={this.state.item}
+            item={this.state.child}
             close={this.props.close}
           />
         </div>
@@ -68,7 +73,7 @@ export default class BookingDetails extends Component {
       return(
         <div>
           <TimeSlots
-            item={this.state.item}
+            item={this.state.child}
             close={this.props.close}
           />
         </div>
@@ -78,12 +83,35 @@ export default class BookingDetails extends Component {
       return(
         <div>
           <PerTime
-            item={this.state.item}
+            item={this.state.child}
             close={this.props.close}
           />
         </div>
       )
     }
+  }
+  childSelect(){
+    if(this.state.item.product_group_type === 'P')
+      if(this.state.item.product_group_children.length > 0){
+        var childId = this.state.item == this.state.child ? this.state.item.product_group_children[0].item_id : this.state.child.item_id
+        return(
+          <SelectField
+            value={childId}
+            onChange={((e, i, value) => {
+              getItem(value, this.props.start_date, this.props.end_date, this.setChild.bind(this))
+            }).bind(this)}
+          >
+            {this.state.item.product_group_children.map((child) => {
+              return(
+                <MenuItem
+                  key={child.item_id}
+                  value={child.item_id}
+                  primaryText = {child.name}
+                />
+              )
+            })}
+          </SelectField>
+        )}
   }
   render(){
     if(this.state.loading){
@@ -92,7 +120,13 @@ export default class BookingDetails extends Component {
     }else{
       return(
         <div style={style.center}>
-          {this.state.item && this.book()}
+          <h2>
+            {this.state.item.name}
+          </h2>
+          {this.childSelect()}
+          <div key={this.state.child.item_id}>
+            {this.state.child && this.book()}
+          </div>
         </div>
       )
     }

@@ -1,4 +1,5 @@
 import {config} from '../config/config.js'
+import {hashHistory} from 'react-router'
 
 //TEMP file for development only
 try{
@@ -31,6 +32,7 @@ export function getItemList(start, end, category, func){
 		var items = resp.data.items
 		var itemList = []
 		for(var key in items){
+			if(items[key].product_group_type === 'C') continue
 			itemList.push({
 				id: key,
 				name: items[key].name,
@@ -70,7 +72,6 @@ export function getItemSlip(item_id, start_date, end_date, start_time, end_time,
 	if(end_time !== null) query += '&end_time=' + end_time
 	if(timeslot !== null) query += '&timeslot=' + timeslot
 	for(var key in param) query += '&param[' + key + ']=' + param[key]
-	console.log(query)
 	axios.get(query).then((resp)=>{
 		func(resp.data.item)
 	}).catch(e=>{

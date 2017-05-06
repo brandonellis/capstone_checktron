@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import moment from 'moment'
+import {hashHistory} from 'react-router'
 
 import DatePicker from 'material-ui/DatePicker'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -151,12 +152,8 @@ export default class PerTime extends Component{
   render(){
     if(this.state.loading)
       getItemSlip(this.state.item_id, this.state.start_date, null, this.state.start_time, this.state.item.len != 0 ? null : this.state.end_time, null, this.state.param, this.setItem.bind(this))
-    console.log(this.state.item.rate.slip)
     return(
       <div>
-        <h2>
-          {this.state.item.name}
-        </h2>
         <div className={'ct-item-status ' + this.state.item.rate.status}>
           {this.state.item.rate.summary.title}
         </div>
@@ -174,7 +171,7 @@ export default class PerTime extends Component{
           label="Submit"
           primary={true}
           disabled={this.state.item.rate.status !== 'AVAILABLE'}
-          onTouchTap={this.props.close}
+          onTouchTap={()=>hashHistory.push('booking_form?slip=' + this.state.item.rate.slip)}
         />
       </div>
     )
