@@ -64,7 +64,19 @@ export class MainNavigation extends Component{
           </Dropdown>
           {*/}
         </div>
-        <div style={style.navbarLeft}>
+        <div style={style.navbarRight} className="ct-nav-win-icons">
+          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+            <img style={style.winIcon} src="images/help.png" />
+          </a>
+          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+            <img style={style.winIcon} src="images/min.png" />
+          </a>
+          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+            <img style={style.winIcon} src="images/max.png" />
+          </a>
+          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+            <img style={style.winIcon} src="images/close.png" />
+          </a>
         </div>
       </div>
     )

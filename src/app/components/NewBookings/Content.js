@@ -13,7 +13,7 @@ const sidebarWidth = 250;
 
 const style = {
   container:{
-    overflowY: 'scroll',
+    overflowY: 'auto',
     position: 'fixed',
     top: 60,
     left: 250,

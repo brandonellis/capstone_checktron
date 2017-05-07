@@ -1,13 +1,13 @@
 import {config} from '../config/config.js'
 import {hashHistory} from 'react-router'
 
-//TEMP file for development only
 try{
 	var axios = require('axios').create(require('../config/api.js').api)
 }catch(err){
 	console.log("Dev Error: missing api.js (checktron/jsx/config/api.).\n	export default {\n	  baseURL: 'https://<name>.checkfront.com/api/3.0/',\n	  auth: {\n	    username: '<token>',\n	    password: '<secret>'\n	  }\n	}")
 	var axios = require('axios').create({baseURL: config.api.hostname})
 }
+
 
 export function getCategoryNames(func){
 	axios.get('category').then((resp)=>{
