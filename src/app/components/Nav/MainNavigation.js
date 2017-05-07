@@ -3,6 +3,7 @@ import { hashHistory } from 'react-router'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
+import {getCategoryNames} from '../../utils/apiHelper'
 import Dropdown from './Dropdown'
 import style from './style'
 const path = require('path')
@@ -18,6 +19,23 @@ function link(path){
 }
 
 export class MainNavigation extends Component{
+  componentDidMount() {
+    getCategoryNames(this.setCategoryState.bind(this))
+  }
+  categories(){
+    if(this.state !== null && this.state.categories !== undefined){
+      return this.state.categories.map((category)=>{
+        return <MenuItem
+          key = {category.id}
+          primaryText={category.name}
+          onTouchTap={link('booking?category_id=' + category.id)}
+        />
+      })
+    }
+  }
+  setCategoryState(categoryNames){
+    this.setState({categories: categoryNames})
+  }
   render(){
     // Math.random() can introduce bugs
     // same number causes menu to stay open, no rerender
@@ -33,6 +51,8 @@ export class MainNavigation extends Component{
               {/* <MenuItem primaryText="Index" secondaryText={modifierKey + 'I'} onTouchTap={link('index')} />
               <Divider /> */}
               <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'N'} onTouchTap={link('booking')} />
+              <Divider />
+              {this.categories()}
             </Menu>
           </Dropdown>
           {/*}

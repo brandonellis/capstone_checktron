@@ -6,6 +6,7 @@
   "scripts": {
     "electron": "electron main.js",
     "electron-pack": "electron-packager ./build/ --out=dist --overwrite --prune=true --ignore=jsx --ignore=.gitignore --ignore=dist --icon=build/win/icon/checkfront.icon --asar",
+    "electron-mac": "electron-packager ./build/ --out=dist --overwrite --prune=true --ignore=jsx --ignore=.gitignore --ignore=dist --icon=build/mac/icon/checkfront.icon --asar",
     "start": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors",
     "pack": "webpack --config webpack-production.config.js --progress --colors",
     "build": "npm run pack && npm run electron-pack"
