@@ -11,9 +11,33 @@ const path = require('path')
 const mac = process.platform === 'darwin'
 const modifierKey = mac ? '&#8984;' : 'Ctrl + '
 
+//todo remove this and the conditions
+var remote
+try{
+  remote = require('electron').remote
+}catch(e){
+  remote = false
+}
+
+function minimize(e) {
+  e.preventDefault()
+  if(remote) remote.getCurrentWindow().minimize()
+}
+function maximize(e) {
+  e.preventDefault()
+  if(remote){
+    var window = remote.getCurrentWindow()
+    !window.isMaximized() ? window.maximize() : window.unmaximize()
+  }
+}
+function close(e) {
+  e.preventDefault()
+  if(remote) remote.getCurrentWindow().close()
+}
+
 function link(path){
   return e=>{
-    e.preventDefault
+    e.preventDefault()
     hashHistory.push(path)
   }
 }
@@ -65,16 +89,19 @@ export class MainNavigation extends Component{
           {*/}
         </div>
         <div style={style.navbarRight} className="ct-nav-win-icons">
-          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+          <a href="#" onClick={(e)=>{
+            e.preventDefault()
+            alert('TODO: modal dialog with tabs [keybord shortcuts|TODO:think of more tabs]')
+          }}>
             <img style={style.winIcon} src="images/help.png" />
           </a>
-          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+          <a href="#" onClick={minimize}>
             <img style={style.winIcon} src="images/min.png" />
           </a>
-          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+          <a href="#" onClick={maximize}>
             <img style={style.winIcon} src="images/max.png" />
           </a>
-          <a href="#" onClick={(e)=>{e.preventDefault()}}>
+          <a href="#" onClick={close}>
             <img style={style.winIcon} src="images/close.png" />
           </a>
         </div>

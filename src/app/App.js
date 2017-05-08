@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {blue500} from 'material-ui/styles/colors';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Header from './components/Header'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import {blue500} from 'material-ui/styles/colors'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import MainNavigation from './components/Nav/MainNavigation'
 import Mousetrap from 'Mousetrap'
 import { hashHistory } from 'react-router'

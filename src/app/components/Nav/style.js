@@ -37,12 +37,13 @@ export default {
   },
   navbarLeft: {
     float: 'left',
+    paddingLeft: 8,
     WebkitAppRegion: 'no-drag'
   },
   navbarRight: {
     float: 'right',
     marginTop: 17,
-    marginRight: 5,
+    marginRight: 8,
     WebkitAppRegion: 'no-drag',
   },
   winIcon: {
