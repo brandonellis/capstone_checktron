@@ -14,6 +14,7 @@ export function getCategoryNames(func){
 		var category = resp.data.category
 		var categoryNames = []
 		for(var key in category){
+			if(category[key].name === 'Gifts') continue
 			categoryNames.push({name: category[key].name, id: key})
 		}
 		categoryNames.sort((a, b) => a.name.localeCompare(b.name))
@@ -32,6 +33,7 @@ export function getItemList(start, end, category, func){
 		var items = resp.data.items
 		var itemList = []
 		for(var key in items){
+			if(items[key].type !== 'I') continue
 			if(items[key].product_group_type === 'C') continue
 			itemList.push({
 				id: key,
