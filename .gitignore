@@ -2,3 +2,4 @@ node_modules
 build
 dist
 src/app/config/api.js
+.idea/
