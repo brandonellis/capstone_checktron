@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+
 
 const style = {
   container: {
@@ -9,12 +11,6 @@ const style = {
   itemTableHead: {
     textAlign: "center",
     backgroundColor: "#efeff0"
-  },
-  col1: {
-    fontWeight: "bold"
-  },
-  col2: {
-
   },
   tableSubTotal1: {
     colSpan: "3"
@@ -42,6 +38,9 @@ export class BookingForm extends Component {
               </table>
               <div>
                 <h2>Customer Form</h2>
+                  <div className="App">
+                      <Items />
+                  </div>
                 <CustomerForm />
               </div>
             </div>
@@ -99,71 +98,102 @@ class CartTotal extends Component {
 }
 
 //Generates input form for customer data entry
-//TODO: Find a react-like way to generate this dynamically instead of typing out HTML....
 class CustomerForm extends Component {
     render() {
         return (
-            <form>
-              <table style={{width:"500px"}}>
-                <tr>
-                  <td>First Name:</td>
-                  <td><input type="text" name="FirstName"/></td>
-                </tr>
-                <tr>
-                  <td>Secondary person's Name:</td>
-                  <td><input type="text" name="SecondaryPersonsName"/></td>
-                </tr>
-                <tr>
-                  <td>E-mail</td>
-                  <td><input type="text" name="Email"/></td>
-                </tr>
-                <tr>
-                  <td>Phone</td>
-                  <td><input type="text" name="Phone"/></td>
-                </tr>
-                <tr>
-                  <td>Address</td>
-                  <td><input type="text" name="Address"/></td>
-                </tr>
-                <tr>
-                  <td>City</td>
-                  <td><input type="text" name="City"/></td>
-                </tr>
-                <tr>
-                  <td>Country</td>
-                  <td><input type="text" name="Country"/></td>
-                </tr>
-                <tr>
-                  <td>Province</td>
-                  <td><input type="text" name="Province"/></td>
-                </tr>
-                <tr>
-                  <td>Postal code</td>
-                  <td><input type="text" name="PostalCode"/></td>
-                </tr>
-                <tr>
-                  <td>Note</td>
-                  <td><input type="text" name="Note"/></td>
-                </tr>
-                <tr>
-                  <td>How did you find us?</td>
-                  <td><input type="text" name="FoundUsBy"/></td>
-                </tr>
-                <tr>
-                  <td>Pet Name</td>
-                  <td><input type="text" name="PetName1"/></td>
-                </tr>
-                <tr>
-                  <td>Second Pet's Name(If applicable)</td>
-                  <td><input type="text" name="PetName1"/></td>
-                </tr>
-                <tr>
-                  <td>Other Pets Names</td>
-                  <td><input type="text" name="PetName1"/></td>
-                </tr>
-                <input type="button" text="submit" />
-              </table>
-            </form>
+<div></div>
+        )
+    }
+}
+function mapObject(object, callback) {
+    return Object.keys(object).map(function (key) {
+        return callback(key, object[key]);
+    })
+}
+class Items extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            form: {},
+            bookingPolicy: {body: ""},
+        };
+    }
+
+    componentDidMount() {
+        // TODO: move url so that it can be changed easily
+        axios.get(`https://capstone2017.checkfront.com/api/3.0/booking/form`)
+            .then(res => {
+                //const posts = res.data.data.children.map(obj => obj.data);
+                this.setState({
+                    form: res.data.booking_form_ui,
+                    bookingPolicy: res.data.booking_policy
+                });
+            });
+    }
+    createInput(key, input) {
+        switch(input.define.layout.type){
+            case 'text':
+            case 'textarea':
+                if(input.define.layout.staff.required != 0)
+                    return(
+                        <input type="text" />
+                    )
+                return(
+                    <input type="text" />
+                )
+                break
+            case 'select':
+                if(input.define.layout.staff.required != 0)
+                    return(
+                        <select>
+                            {mapObject(input.define.layout.options, (value, html)=>{
+                                return(
+                                    <option
+                                        selected={input.value && input.value === value}
+                                        key={value}
+                                        value={value}
+                                    >{html}</option>
+                                )
+                            })}
+                        </select>
+                    )
+                return(
+                    <select>
+                        {mapObject(input.define.layout.options, (value, html)=>{
+                            return(
+                                <option
+                                    selected={input.value && input.value === value}
+                                    key={value}
+                                    value={value}
+                                >{html}</option>
+                            )
+                        })}
+                    </select>
+                )
+                break
+            default:
+                alert('new input type' + input.layout.type)
+        }
+    }
+    render() {
+        return (
+            <div>
+                <h1>Form</h1>
+                <ul>
+                    {mapObject(this.state.form, (key, value)=>{
+                        return(
+                            <li>{this.createInput(key, value)}
+                                <ul>
+                                    <li>label: {value.define.layout.lbl}</li>
+                                    <li>type: {value.define.layout.type}</li>
+                                    {value.value && [<li>value: {value.value}</li>]}
+                                    {value.define.layout.staff.required == 1 && [<li>required</li>]}
+                                </ul>
+                            </li>
+                        )})}
+                </ul>
+                <div dangerouslySetInnerHTML={{__html: this.state.bookingPolicy.body}} />
+            </div>
         )
     }
 }
