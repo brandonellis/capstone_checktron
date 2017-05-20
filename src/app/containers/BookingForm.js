@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import TextField from 'material-ui/TextField'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import RaisedButton from 'material-ui/RaisedButton'
 
 
 const style = {
@@ -26,19 +30,19 @@ export class BookingForm extends Component {
     //booking form
     render() {
         return (
-            <div>
+            <div style={style.container}>
               <h2>Create Booking</h2>
               <div>
                 <h2>Slip={this.props.location.query.slip}</h2>
               </div>
-              <table style={style.container}>
+              <table>
                 <BookingTableHead />
                 <BookingTableItems />
                 <CartTotal />
               </table>
               <div>
                 <h2>Customer Form</h2>
-                  <div className="App">
+                  <div>
                       <Items />
                   </div>
                 <CustomerForm />
@@ -114,8 +118,9 @@ class Items extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            form: {},
+            bookingForm: {},
             bookingPolicy: {body: ""},
+            form: {},
         };
     }
 
@@ -124,51 +129,73 @@ class Items extends React.Component {
         axios.get(`https://capstone2017.checkfront.com/api/3.0/booking/form`)
             .then(res => {
                 //const posts = res.data.data.children.map(obj => obj.data);
-                this.setState({
-                    form: res.data.booking_form_ui,
-                    bookingPolicy: res.data.booking_policy
-                });
-            });
+                this.setState((prevState)=>{
+                    var form = {}
+                    for(var input in res.data.booking_form_ui){
+                        form[input] = res.data.booking_form_ui[input].value
+                    }
+                    return({
+                        bookingForm: res.data.booking_form_ui,
+                        bookingPolicy: res.data.booking_policy,
+                        form: form,
+                    })
+                })
+            })
     }
+
+    handleInput(e, newValue, input) {
+        this.setState(
+            (prevState)=>{
+                prevState.form[input] = newValue
+                //alert(input)
+                //alert(newValue)
+                return{form:prevState.form}
+            }
+        )
+    }
+
     createInput(key, input) {
+        //TODO: Function to ensure all requirements have been met
+        var required = input.define.layout.staff.required
+        required &= typeof this.state.form[key] !== "string" || this.state.form[key] === ""
         switch(input.define.layout.type){
             case 'text':
             case 'textarea':
-                if(input.define.layout.staff.required != 0)
-                    return(
-                        <input type="text" />
-                    )
+                var type = input.define.layout.type === "textarea"
                 return(
-                    <input type="text" />
+                    <TextField
+                        errorText={required ? "required" : undefined}
+                        errorStyle={{color: "#ff605d"}}
+                        floatingLabelText={input.define.layout.lbl}
+                        multiLine={type}
+                        rows={type ? 4 : 1}
+                        fullWidth={true}
+                        floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
+                        onBlur = {((e)=>this.handleInput(e, e.target.value, key)).bind(this)}
+                        //floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                    />
                 )
                 break
             case 'select':
-                if(input.define.layout.staff.required != 0)
-                    return(
-                        <select>
-                            {mapObject(input.define.layout.options, (value, html)=>{
-                                return(
-                                    <option
-                                        selected={input.value && input.value === value}
-                                        key={value}
-                                        value={value}
-                                    >{html}</option>
-                                )
-                            })}
-                        </select>
-                    )
                 return(
-                    <select>
-                        {mapObject(input.define.layout.options, (value, html)=>{
-                            return(
-                                <option
-                                    selected={input.value && input.value === value}
-                                    key={value}
-                                    value={value}
-                                >{html}</option>
-                            )
-                        })}
-                    </select>
+                    <SelectField
+                        value={this.state.form[key]}
+                        maxHeight={200}
+                        errorText={required ? "required" : undefined}
+                        errorStyle={{color: "#ff605d"}}
+                        floatingLabelText={input.define.layout.lbl}
+                        fullWidth={true}
+                        floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
+                        //onChange={((e, v)=>this.handleInput(e, v, key)).bind(this)}
+                    >
+                    {mapObject(input.define.layout.options, (value, text)=>{
+                        return(
+                            <MenuItem value={value} key={value} primaryText={text}
+                                      onTouchTap={((e)=>this.handleInput(e, value, key)).bind(this)}
+                            />
+                        )
+                    })}
+                    </SelectField>
                 )
                 break
             default:
@@ -180,18 +207,18 @@ class Items extends React.Component {
             <div>
                 <h1>Form</h1>
                 <ul>
-                    {mapObject(this.state.form, (key, value)=>{
+                    {mapObject(this.state.bookingForm, (key, value)=>{
                         return(
-                            <li>{this.createInput(key, value)}
-                                <ul>
-                                    <li>label: {value.define.layout.lbl}</li>
-                                    <li>type: {value.define.layout.type}</li>
-                                    {value.value && [<li>value: {value.value}</li>]}
-                                    {value.define.layout.staff.required == 1 && [<li>required</li>]}
-                                </ul>
-                            </li>
-                        )})}
+                            <li>{this.createInput(key, value)}</li>
+                        )
+                    })}
+                    <li>
+                        <RaisedButton label="Submit" style={style}
+                                      //TODO
+                        />
+                    </li>
                 </ul>
+
                 <div dangerouslySetInnerHTML={{__html: this.state.bookingPolicy.body}} />
             </div>
         )
