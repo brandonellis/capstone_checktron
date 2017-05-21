@@ -48,7 +48,7 @@ table {
 th, td {
     padding: 6px;
 }
-tr:hover{
+tr.hover:hover{
   background-color: rgba(200, 200, 200, 0.3);
 }
 /*** END ***/

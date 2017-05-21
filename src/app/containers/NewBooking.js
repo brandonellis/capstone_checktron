@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 const moment = require('moment');
-import ItemList from '../components/NewBookings/Content'
+import Content from '../components/NewBookings/Content'
 import Sidebar from '../components/NewBookings/Sidebar'
 
 export class NewBooking extends Component{
@@ -25,7 +25,7 @@ export class NewBooking extends Component{
           end={end}
           category={category}
         />
-        <ItemList
+        <Content
           key={this.props.location.search}
           start={start}
           end={end}

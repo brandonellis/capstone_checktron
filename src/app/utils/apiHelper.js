@@ -81,3 +81,33 @@ export function getItemSlip(item_id, start_date, end_date, start_time, end_time,
 		func(null)
 	})
 }
+
+export function getSession(slip, func){
+	axios.get('booking/session?slip=' + slip).then(resp=>{
+		func(resp.data.booking.session)
+	}).catch(e=>{
+		console.log(e)
+		func(null)
+	})
+}
+
+export function getForm(func){
+	axios.get('booking/form')
+	.then(resp=>{
+		func(resp.data)
+	})
+	.catch(e=>{
+		console.log(e)
+		func(null)
+	})
+}
+
+export function createBooking(session_id, form){
+	axios.post('booking/create', {form: form, session_id: session_id})
+	.then(resp=>{
+		console.log(JSON.stringify(resp.data, null, 4))
+	})
+	.catch(e=>{
+		console.log(e)
+	})
+}
