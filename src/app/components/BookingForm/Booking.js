@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {hashHistory} from 'react-router'
 import axios from 'axios'
 
 import TextField from 'material-ui/TextField'
@@ -14,7 +15,7 @@ const style = {
     overflowY: 'auto',
     position: 'fixed',
     top: 60,
-    left: 250,
+    left: 0,
     bottom: 0,
     right: 0
   },
@@ -36,7 +37,8 @@ const style = {
   col3: {
     borderStyle: 'none',
     textAlign: 'right',
-    width: '1%'
+    width: '1%',
+    whiteSpace: 'nowrap'
   },
 }
 
@@ -56,19 +58,21 @@ export class Booking extends Component {
     }
   }
   componentDidMount(){
-    getSession(this.props.slip, (session=>{this.setState({session: session})}).bind(this))
+    getSession(this.props.slip, this.state.session.id, (session=>{this.setState({session: session})}).bind(this))
   }
 
   //booking form
   render() {
     return (
-      <div style={style.content}>
+      <div style={style.content} key={this.state.session.id}>
         <div style={style.container} className='container'>
           <h2>Create Booking</h2>
+          {/*
           <div>
             <h2>Slip={this.props.slip}</h2>
             <h2>Session={this.state.session.id}</h2>
           </div>
+          */}
           <table>
             <BookingTableHead />
             <BookingTableItems session={this.state.session} />
@@ -110,7 +114,7 @@ class BookingTableItems extends Component {
     var item = items[Object.keys(items)[0]]
     return (
       <tbody>
-      {/* Options show up
+      {/* Options show up */
         mapObject(items, (key, value)=>{
         return (
           <tr key={value.name + key}>
@@ -123,24 +127,14 @@ class BookingTableItems extends Component {
               dangerouslySetInnerHTML={{__html: value.rate.summary}}
             ></td>
             <td style={style.col3}>
-              <strong>${value.rate.total}</strong>
+              <strong>{
+                value.opt === 'out' ?
+                'Not Selected':
+                '$' + value.rate.total}</strong>
             </td>
           </tr>
         )
-      })*/}
-        <tr>
-          <td style={style.col}>
-            <strong>{item.name}</strong>
-            <br />{item.date.summary}
-          </td>
-          <td
-            style={style.col}
-            dangerouslySetInnerHTML={{__html: item.rate.summary}}
-          ></td>
-          <td style={style.col3}>
-            <strong>${item.rate.total}</strong>
-          </td>
-        </tr>
+      })}
       </tbody>
     )
   }
@@ -261,6 +255,13 @@ class Items extends React.Component {
                 alert('new input type' + input.layout.type)
         }
     }
+    bookingPage(data){
+      if(data.request.status === 'OK'){
+        hashHistory.push('booking_page?id=' + data.booking.booking_id)
+      }else{
+        alert(data.request.error.details)
+      }
+    }
     render() {
       var r = {incomplete: false}
         return (
@@ -278,7 +279,7 @@ class Items extends React.Component {
                           label="Submit"
                           disabled={r.incomplete ? true : false}
                           style={style}
-                          onTouchTap={e=>{createBooking(this.props.session, this.state.form)}}
+                          onTouchTap={e=>{createBooking(this.props.session, this.state.form, this.bookingPage)}}
                         />
                     </li>
                 </ul>

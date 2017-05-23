@@ -82,12 +82,15 @@ export function getItemSlip(item_id, start_date, end_date, start_time, end_time,
 	})
 }
 
-export function getSession(slip, func){
-	axios.get('booking/session?slip=' + slip).then(resp=>{
-		func(resp.data.booking.session)
-	}).catch(e=>{
-		console.log(e)
-		func(null)
+export function getSession(slip, session_id, func){
+	//alert(session_id)
+	axios.post('booking/session/clear').then(()=>{
+		axios.post('booking/session', {slip: slip}).then(resp=>{
+			func(resp.data.booking.session)
+		}).catch(e=>{
+			console.log(e)
+			func(null)
+		})
 	})
 }
 
@@ -102,12 +105,76 @@ export function getForm(func){
 	})
 }
 
-export function createBooking(session_id, form){
+export function createBooking(session_id, form, func){
 	axios.post('booking/create', {form: form, session_id: session_id})
 	.then(resp=>{
 		console.log(JSON.stringify(resp.data, null, 4))
+		func(resp.data)
 	})
 	.catch(e=>{
 		console.log(e)
 	})
 }
+
+export function getBookings(page, func){
+	//alert('booking/index?page=' + page)
+	axios.get('booking/index?page=' + page)
+	.then(resp=>{
+		//console.log(JSON.stringify(resp.data,null,4))
+		func(resp.data)
+	})
+	.catch(e=>{
+		console.log(e)
+		func(null)
+	})
+}
+
+export function getBookingInfo(id, func){
+	//alert('booking/index?page=' + page)
+	axios.get('booking/' + id)
+	.then(resp=>{
+		//console.log(JSON.stringify(resp.data,null,4))
+		func(resp.data.booking)
+	})
+	.catch(e=>{
+		console.log(e)
+		func(null)
+	})
+}
+
+export function getBookingPolicy(func){
+	//alert('booking/index?page=' + page)
+	axios.get('booking/form')
+	.then(resp=>{
+		//alert(JSON.stringify(resp.data.booking_policy.body,null,4))
+		func(resp.data.booking_policy.body)
+	})
+	.catch(e=>{
+		console.log(e)
+		func(null)
+	})
+}
+
+export function getCompanyInfo(func){
+	axios.get('company')
+	.then(resp=>{
+		//alert(JSON.stringify(resp.data,null,4))
+		func(resp.data.company)
+	})
+	.catch(e=>{
+		console.log(e)
+		func(null)
+	})
+}
+
+export function changeStatus(booking, status, func){
+	axios.get('booking/' + booking + '/update?status_id=' + status)
+	.then(resp=>{
+		//alert(JSON.stringify(resp.data))
+		func()
+	})
+	.catch(e=>{
+		console.log(e)
+	})
+}
+//window.location.reload()

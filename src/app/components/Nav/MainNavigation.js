@@ -72,8 +72,8 @@ export class MainNavigation extends Component{
           </a>
           <Dropdown label="Booking" key={Math.random()}>
             <Menu desktop={true} width={256}>
-              {/* <MenuItem primaryText="Index" secondaryText={modifierKey + 'I'} onTouchTap={link('index')} />
-              <Divider /> */}
+              <MenuItem primaryText="Index" secondaryText={modifierKey + 'I'} onTouchTap={link('index')} />
+              <Divider />
               <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'N'} onTouchTap={link('booking')} />
               <Divider />
               {this.categories()}
