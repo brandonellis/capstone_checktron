@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import BookingList from '../components/BookingIndex/BookingList'
 
 export class BookingIndex extends Component{
   render(){
     return(
       <div>
-        <h2>BookingIndex</h2>
+        <BookingList />
       </div>
     )
   }

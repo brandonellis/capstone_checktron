@@ -37,6 +37,16 @@ h2 {
 /*** END ***/
 
 /*** tables ***/
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+td em {
+    font-size: 0.9em;
+    opacity: 0.8;
+    display: block;
+    font-style: normal;
+}
 table, td, th {
     border: 1px solid #ddd;
     text-align: left;
@@ -48,7 +58,7 @@ table {
 th, td {
     padding: 6px;
 }
-tr:hover{
+tr.hover:hover{
   background-color: rgba(200, 200, 200, 0.3);
 }
 /*** END ***/
@@ -86,3 +96,80 @@ tr:hover{
   background: #ddd;
 }
 /*** END ***/
+
+.SB {
+    color: #555;
+    font-weight: bold;
+    line-height: 2.2em;
+    margin-right: 1.2em !important;
+    padding-right: 1em;
+}
+.SB div {
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 0.3em;
+    border-size: 1px;
+    border-style: solid;
+    display: block;
+    text-shadow: none;
+    float: left;
+    margin: 3px;
+    clear: none;
+    text-align: center;
+}
+.PRE {
+    border: solid 1px #cccccc;
+    background-color: #cccccc;
+}
+.PEND {
+    border: solid 1px #1a979c;
+    background-color: #1a979c;
+}
+.HOLD {
+    border: solid 1px #2b3d51;
+    background-color: #2b3d51;
+}
+.PART {
+    border: solid 1px #80898f;
+    background-color: #80898f;
+}
+.PAID {
+    border: solid 1px #91b262;
+    background-color: #91b262;
+}
+.WAIT {
+    border: solid 1px #55007c;
+    background-color: #55007c;
+}
+.STOP {
+    border: solid 1px #bb2244;
+    background-color: #bb2244;
+}
+.VOID {
+    border: solid 1px #999999;
+    background-color: #999999;
+}
+.BLOKI {
+    border: solid 1px #000000;
+    background-color: #000000;
+}
+.STATE {
+    border: solid 1px #ff8c00;
+    background-color: #ff8c00;
+}
+.PRIVA {
+    border: solid 1px #808000;
+    background-color: #808000;
+}
+.REQUE {
+    border: solid 1px #ff4500;
+    background-color: #ff4500;
+}
+.hdr {
+    color: #ffffff;
+    background-color: #d2691e;
+}
+.hdr a,
+.hdr a:hover {
+    color: #ffffff;
+}

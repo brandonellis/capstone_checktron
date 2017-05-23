@@ -123,7 +123,7 @@ export class Content extends Component{
                     }
               }
               return (
-                <tr key={item.id}>
+                <tr key={item.id} className='hover'>
                   <td style={style.col1}>
                     <a
                       href='#'

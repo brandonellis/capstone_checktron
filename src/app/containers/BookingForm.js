@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
+const moment = require('moment');
+import Booking from '../components/BookingForm/Booking'
 
-export default class BookingForm extends Component{
+export class BookingForm extends Component{
   render(){
-    return(
-      <div>
-        <h2>Slip={this.props.location.query.slip}</h2>
-      </div>
-    )
+    return <Booking slip={this.props.location.query.slip} />
   }
 }
+
+export default BookingForm
