@@ -138,7 +138,6 @@ export class Status extends Component {
             })}
           </Menu>
         </Popover>
-        {this.props.booking + ' ' + this.props.status}
       </div>
     )
   }

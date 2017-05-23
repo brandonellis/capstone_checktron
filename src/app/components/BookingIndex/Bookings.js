@@ -37,12 +37,18 @@ export default class Bookings extends React.Component{
     setInterval(function(){ this.reload; }, 3000);
     return(
       <table>
-        <th>Booking</th>
-        <th>Customer</th>
-        <th>Status</th>
-        {mapObject(this.props.bookings, (key, value)=>{
-          return <BookingRow booking={value} id={value.booking_id} />
-        })}
+        <thead>
+          <tr>
+            <th>Booking</th>
+            <th>Customer</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mapObject(this.props.bookings, (key, value)=>{
+            return <BookingRow key={key} booking={value} id={value.booking_id} />
+          })}
+        </tbody>
       </table>
     )
   }

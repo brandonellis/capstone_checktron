@@ -14,57 +14,6 @@ const style = {
   }
 }
 
-var status = {
-  HOLD: {
-    name: 'Reserved',
-    color: '#2b3d51'
-  },
-  PRE: {
-    name: 'pre',
-    color: '#cccccc'
-  },
-  PEND: {
-    name: 'Pending',
-    color: '#1a979c'
-  },
-  PART: {
-    name: 'Deposit',
-    color: '#80898f'
-  },
-  PAID: {
-    name: 'Paid',
-    color: '#91b262'
-  },
-  WAIT: {
-    name: 'Waiting',
-    color: '#55007c'
-  },
-  STOP: {
-    name: 'Cancelled',
-    color: '#bb2244'
-  },
-  VOID: {
-    name: 'Void',
-    color: '#999999'
-  },
-  BLOKI: {
-    name: 'Blokirano',
-    color: '#000000'
-  },
-  STATE: {
-    name: 'State',
-    color: '#ff8c00'
-  },
-  PRIVA: {
-    name: 'Private',
-    color: '#808000'
-  },
-  REQUE: {
-    name: 'Request',
-    color: '#ff4500'
-  }
-}
-
 export default class Booking extends Component{
   constructor(props){
     super(props)
@@ -97,7 +46,6 @@ export default class Booking extends Component{
     var policy = this.state.policy
     return(
       <div style={style.container}>
-        {this.props.location.query.id}
         <div className='container'>
           <div>
             <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
