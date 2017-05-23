@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import {getCompanyInfo, getBookingInfo, getBookingPolicy} from '../utils/apiHelper'
+import {getCountryName} from '../utils/helper'
 import Status from '../components/Booking/Status'
 
 const style = {
@@ -10,7 +11,8 @@ const style = {
     top: 60,
     left: 0,
     bottom: 0,
-    right: 0
+    right: 0,
+    paddingTop: 8
   }
 }
 
@@ -61,12 +63,12 @@ export default class Booking extends Component{
                       </td>
                       <td style={{textAlign: 'right', padding: '0.5em'}}>
                         <h2 style={{fontSize: '14pt', padding: 0, margin: 0, color: '#333'}}>{company.name}</h2>
-                        <address><br />{company.address}<br />{company.city}, {company.region}, {company.country_id}, {company.postal_zip}<br />{company.phone}</address>
+                        <address><br />{company.address}<br />{company.city}, {company.region}, {getCountryName(company.country_id)}, {company.postal_zip}<br />{company.phone}</address>
                       </td>
                     </tr>
                     <tr>
                       <td style={{paddingTop: '1em', fontSize: '10pt'}}>
-                        <div className="cf-customer-addr"><strong>{booking.customer_name}</strong><br /><i className="fa fa-envelope"/> {booking.customer_email}<br />{booking.customer_phone}<br />{booking.customer_region}<br />{booking.customer_contry}</div>
+                        <div className="cf-customer-addr"><strong>{booking.customer_name}</strong><br /><i className="fa fa-envelope"/> {booking.customer_email}<br />{booking.customer_phone}<br />{booking.customer_region}<br />{getCountryName(booking.customer_country)}</div>
                       </td>
                       <td style={{textAlign: 'right', paddingTop: '1em'}}>
                         <table className="invoice_details">
@@ -84,7 +86,7 @@ export default class Booking extends Component{
                               <td style={{whiteSpace: 'nowrap'}}>{moment(new Date(booking.start_date*1000)).format('MMMM D, YYYY')}</td>
                             </tr>
                             <tr>
-                              <th> Total (CAD):</th>
+                              <th> Total ({company.currency_id}):</th>
                               <td style={{whiteSpace: 'nowrap'}}>${booking.total}</td>
                             </tr>
                           </tbody>
