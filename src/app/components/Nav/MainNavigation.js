@@ -11,6 +11,12 @@ const path = require('path')
 const mac = process.platform === 'darwin'
 const modifierKey = mac ? '&#8984;' : 'Ctrl + '
 
+const styles = {
+  divider: {
+    background: "rgb(44, 151, 222)"
+  }
+}
+
 //todo remove this and the conditions
 var remote
 try{
@@ -62,8 +68,8 @@ export class MainNavigation extends Component{
   }
   render(){
     // Math.random() can introduce bugs
-    // same number causes menu to stay open, no rerender
-    // two components with same key causses error, duplacet key
+    // same number causes menu to stay open, no re-render
+    // two components with same key causes error, duplicate key
     return(
       <div style={style.navbar}>
         <div style={style.navbarLeft}>
@@ -73,9 +79,9 @@ export class MainNavigation extends Component{
           <Dropdown label="Booking" key={Math.random()}>
             <Menu desktop={true} width={256}>
               <MenuItem primaryText="Index" secondaryText={modifierKey + 'I'} onTouchTap={link('index')} />
-              <Divider />
+              <Divider style={styles.divider}/>
               <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'N'} onTouchTap={link('booking')} />
-              <Divider />
+              <Divider style={styles.divider}/>
               {this.categories()}
             </Menu>
           </Dropdown>
