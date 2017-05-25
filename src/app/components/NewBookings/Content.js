@@ -31,11 +31,26 @@ const style = {
   col2: {
     textAlign: 'right',
     width: '1px',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    fontSize: '16px'
   },
   col3: {
     textAlign: 'center',
     width: '15%'
+  },
+  thCol1: {
+    fontSize: '18px'
+  },
+  thCol2: {
+    textAlign: 'right',
+    width: '1px',
+    whiteSpace: 'nowrap',
+    fontSize: '18px'
+  },
+  thCol3: {
+    textAlign: 'center',
+    width: '15%',
+    fontSize: '18px'
   },
   center: {
     marginTop: 0,
@@ -43,6 +58,9 @@ const style = {
     marginBottom: 0,
     marginLeft: 'auto',
     display: 'block',
+  },
+  tableHeader: {
+    fontSize: "24px"
   },
 }
 
@@ -107,9 +125,9 @@ export class Content extends Component{
         <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto'}} fixedHeader={false}>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow style={{backgroundColor: "#eee"}}>
-              <TableHeaderColumn style={style.col1}>Item</TableHeaderColumn>
-              <TableHeaderColumn style={style.col2}>Price</TableHeaderColumn>
-              <TableHeaderColumn style={style.col3}>Status</TableHeaderColumn>
+              <TableHeaderColumn style={style.thCol1}>Item</TableHeaderColumn>
+              <TableHeaderColumn style={style.thCol2}>Price</TableHeaderColumn>
+              <TableHeaderColumn style={style.thCol3}>Status</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
