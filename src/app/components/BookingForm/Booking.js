@@ -199,7 +199,7 @@ class Items extends React.Component {
   createInput(key, input, r) {
       //TODO: Function to ensure all requirements have been met
 
-      var required = input.define.layout.customer.required
+      var required = input.define.required
       required &= typeof this.state.form[key] !== "string" || this.state.form[key] === ""
       r.incomplete |= required
 
