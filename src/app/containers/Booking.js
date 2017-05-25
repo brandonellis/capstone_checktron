@@ -11,15 +11,10 @@ const style = {
     top: 60,
     left: 0,
     bottom: 0,
-<<<<<<< HEAD
     right: 0
   },
   invoice:{
     marginTop: 40
-=======
-    right: 0,
-    paddingTop: 8
->>>>>>> 366620151438c8fe105390c2d2474bd4d376f4ff
   }
 }
 
