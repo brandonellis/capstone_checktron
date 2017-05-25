@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {hashHistory} from 'react-router'
 import {mapObject} from '../../utils/helper'
 
 class BookingStatus extends React.Component{
@@ -15,9 +16,16 @@ class BookingStatus extends React.Component{
 class BookingRow extends React.Component{
   render(){
     return(
-     <tr className='hover'>
+      <tr
+        className='hover'
+        style={{cursor: 'pointer'}}
+        onClick={(e=>{
+          e.preventDefault()
+          hashHistory.push('booking_page?id=' + this.props.booking.booking_id)
+        }).bind(this)}
+      >
         <td>
-          <a href={'#booking_page?id=' + this.props.booking.booking_id}>{this.props.booking.code}</a>
+          <strong>{this.props.booking.code}</strong>
         </td>
         <td>
           {this.props.booking.customer_name}
