@@ -6,6 +6,8 @@ import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
+import Divider from 'material-ui/Divider'
+import Paper from 'material-ui/Paper'
 
 import {getSession, getForm, createBooking} from '../../utils/apiHelper'
 import {mapObject} from '../../utils/helper'
@@ -22,7 +24,8 @@ const style = {
   container: {
     maxWidth: 1365,
     marginLeft: "auto",
-    marginRight: "auto"
+    marginRight: "auto",
+    marginTop: 40
   },
   itemTableHead: {
     textAlign: "center",
@@ -66,7 +69,6 @@ export class Booking extends Component {
     return (
       <div style={style.content} key={this.state.session.id}>
         <div style={style.container} className='container'>
-          <h2>Create Booking</h2>
           {/*
           <div>
             <h2>Slip={this.props.slip}</h2>
@@ -79,11 +81,9 @@ export class Booking extends Component {
             <CartTotal session={this.state.session} />
           </table>
           <div>
-            <h2>Customer Form</h2>
               <div>
                   <Items session={this.state.session.id} />
               </div>
-            <CustomerForm />
           </div>
         </div>
       </div>
@@ -158,135 +158,132 @@ class CartTotal extends Component {
   }
 }
 
-//Generates input form for customer data entry
-class CustomerForm extends Component {
-    render() {
-        return (
-<div></div>
-        )
-    }
-}
 class Items extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-          bookingForm: {},
-          bookingPolicy: {body: ""},
-          form: {},
-        }
-    }
-
-    componentDidMount() {
-      getForm(this.setForm.bind(this))
-    }
-
-    setForm(bookingForm){
-      this.setState((prevState)=>{
-        var form = {}
-        for(var input in bookingForm.booking_form_ui){
-          form[input] = bookingForm.booking_form_ui[input].value
-        }
-        return({
-          bookingForm: bookingForm.booking_form_ui,
-          bookingPolicy: bookingForm.booking_policy,
-          form: form,
-        })
-      })
-    }
-    handleInput(e, newValue, input) {
-        this.setState(
-            (prevState)=>{
-                prevState.form[input] = newValue
-                //alert(input)
-                //alert(newValue)
-                return{form:prevState.form}
-            }
-        )
-    }
-
-    createInput(key, input, r) {
-        //TODO: Function to ensure all requirements have been met
-
-        var required = input.define.layout.customer.required
-        required &= typeof this.state.form[key] !== "string" || this.state.form[key] === ""
-        r.incomplete |= required
-
-        switch(input.define.layout.type){
-            case 'text':
-            case 'textarea':
-                var type = input.define.layout.type === "textarea"
-                return(
-                    <TextField
-                        errorText={required ? "required" : undefined}
-                        errorStyle={{color: "#ff605d"}}
-                        floatingLabelText={input.define.layout.lbl}
-                        multiLine={type}
-                        rows={type ? 2 : 1}
-                        fullWidth={true}
-                        floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
-                        onBlur = {((e)=>this.handleInput(e, e.target.value, key)).bind(this)}
-                        //floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-                    />
-                )
-                break
-            case 'select':
-                return(
-                    <SelectField
-                        value={this.state.form[key]}
-                        maxHeight={200}
-                        errorText={required ? "required" : undefined}
-                        errorStyle={{color: "#ff605d"}}
-                        floatingLabelText={input.define.layout.lbl}
-                        fullWidth={true}
-                        floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
-                        //onChange={((e, v)=>this.handleInput(e, v, key)).bind(this)}
-                    >
-                    {mapObject(input.define.layout.options, (value, text)=>{
-                        return(
-                            <MenuItem value={value} key={value} primaryText={text}
-                                      onTouchTap={((e)=>this.handleInput(e, value, key)).bind(this)}
-                            />
-                        )
-                    })}
-                    </SelectField>
-                )
-                break
-            default:
-                alert('new input type' + input.layout.type)
-        }
-    }
-    bookingPage(data){
-      if(data.request.status === 'OK'){
-        hashHistory.push('booking_page?id=' + data.booking.booking_id)
-      }else{
-        alert(data.request.error.details)
+  constructor(props) {
+      super(props)
+      this.state = {
+        bookingForm: {},
+        bookingPolicy: {body: ""},
+        form: {},
       }
-    }
-    render() {
-      var r = {incomplete: false}
-        return (
-            <div>
-                <h1>Form</h1>
-                <ul>
-                    {mapObject(this.state.bookingForm, (key, value)=>{
-                        return(
-                            <li key={key}>{this.createInput(key, value, r)}</li>
-                        )
-                    })}
-                    <li>
-                        <RaisedButton
-                          key={r.incomplete? 'disabled' : 'enabled'}
-                          label="Submit"
-                          disabled={r.incomplete ? true : false}
-                          style={style}
-                          onTouchTap={e=>{createBooking(this.props.session, this.state.form, this.bookingPage)}}
-                        />
-                    </li>
-                </ul>
+  }
 
-                <div dangerouslySetInnerHTML={{__html: this.state.bookingPolicy.body}} />
-            </div>
-        )
+  componentDidMount() {
+    getForm(this.setForm.bind(this))
+  }
+
+  setForm(bookingForm){
+    this.setState((prevState)=>{
+      var form = {}
+      for(var input in bookingForm.booking_form_ui){
+        form[input] = bookingForm.booking_form_ui[input].value
+      }
+      return({
+        bookingForm: bookingForm.booking_form_ui,
+        bookingPolicy: bookingForm.booking_policy,
+        form: form,
+      })
+    })
+  }
+  handleInput(e, newValue, input) {
+      this.setState(
+          (prevState)=>{
+              prevState.form[input] = newValue
+              //alert(input)
+              //alert(newValue)
+              return{form:prevState.form}
+          }
+      )
+  }
+
+  createInput(key, input, r) {
+      //TODO: Function to ensure all requirements have been met
+
+      var required = input.define.layout.customer.required
+      required &= typeof this.state.form[key] !== "string" || this.state.form[key] === ""
+      r.incomplete |= required
+
+      switch(input.define.layout.type){
+          case 'text':
+          case 'textarea':
+              var type = input.define.layout.type === "textarea"
+              return(
+                  <TextField
+                      errorText={required ? "required" : undefined}
+                      errorStyle={{color: "#ff605d"}}
+                      floatingLabelText={input.define.layout.lbl}
+                      multiLine={type}
+                      rows={type ? 2 : 1}
+                      fullWidth={true}
+                      floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
+                      onBlur = {((e)=>this.handleInput(e, e.target.value, key)).bind(this)}
+                      //floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                  />
+              )
+              break
+          case 'select':
+              return(
+                  <SelectField
+                      value={this.state.form[key]}
+                      maxHeight={200}
+                      errorText={required ? "required" : undefined}
+                      errorStyle={{color: "#ff605d"}}
+                      floatingLabelText={input.define.layout.lbl}
+                      fullWidth={true}
+                      floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
+                      //onChange={((e, v)=>this.handleInput(e, v, key)).bind(this)}
+                  >
+                  {mapObject(input.define.layout.options, (value, text)=>{
+                      return(
+                          <MenuItem value={value} key={value} primaryText={text}
+                                    onTouchTap={((e)=>this.handleInput(e, value, key)).bind(this)}
+                          />
+                      )
+                  })}
+                  </SelectField>
+              )
+              break
+          default:
+              alert('new input type' + input.layout.type)
+      }
+  }
+  bookingPage(data){
+    if(data.request.status === 'OK'){
+      hashHistory.push('booking_page?id=' + data.booking.booking_id)
+    }else{
+      alert(data.request.error.details)
     }
+  }
+  render() {
+    var r = {incomplete: false}
+    return (
+      <div style={{marginTop:40}}>
+        <Paper zDepth={2}>
+          <div style={{padding:20}}>
+            <h2>Customer Form</h2>
+            <ul>
+              {mapObject(this.state.bookingForm, (key, value)=>{
+                return(
+                  <li key={key}>{this.createInput(key, value, r)}</li>
+                )
+              })}
+              <br />
+              <li>
+                <RaisedButton
+                  key={r.incomplete? 'disabled' : 'enabled'}
+                  label="Submit"
+                  disabled={r.incomplete ? true : false}
+                  style={style}
+                  onTouchTap={e=>{createBooking(this.props.session, this.state.form, this.bookingPage)}}
+                />
+              </li>
+            </ul>
+          </div>
+        </Paper>
+        <br />
+        <div dangerouslySetInnerHTML={{__html: this.state.bookingPolicy.body}} />
+    </div>
+    )
+  }
 }
 export default Booking
