@@ -11,8 +11,15 @@ const style = {
     top: 60,
     left: 0,
     bottom: 0,
+<<<<<<< HEAD
+    right: 0
+  },
+  invoice:{
+    marginTop: 40
+=======
     right: 0,
     paddingTop: 8
+>>>>>>> 366620151438c8fe105390c2d2474bd4d376f4ff
   }
 }
 
@@ -48,7 +55,7 @@ export default class Booking extends Component{
     var policy = this.state.policy
     return(
       <div style={style.container}>
-        <div className='container'>
+        <div className='container' style={style.invoice}>
           <div>
             <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
             <style type="text/css" dangerouslySetInnerHTML={{__html: "#checkfront-invoice {background: #fff;margin-bottom: 1em;font: 11pt Helvetica Neue,Helvetica,Arial,sans-serif;}table {border-collapse: collapse;border-spacing: 0;}.item_table tr {page-break-inside: avoid;}.item_table td,.item_table th {vertical-align: top;padding: 5px;text-align: left;}.item_table thead tr {background:#e1e1e1;}.item_table thead th {border-bottom: solid 1px #aaa;}.item_table tr.sum-row td,.item_table tr.sum-row th {text-align: right;white-space: nowrap;}.item_table tr.border-top {border-top: solid 1px #111;}.invoice_header td,.invoice_header th {vertical-align: top;text-align: left;padding:0;border:0;}.invoice_details {max-width: 300px;float: right;border: solid 1px #aaa;font-size: 9pt;text-align: right;}.invoice_details th {background: #e1e1e1;padding: 5px;}.invoice_details td {text-align: right;padding: 5px}.btn-invoice {background-color: #fff;color: #777;font-weight: bold;text-decoration: none;padding: 3px 10px;border: solid 1px #ccc;margin-right: 5px;}address {font-size: 9pt;color: #777;}#checkfront_status {display: inline-block;padding: .5em 1em .5em 1em;margin-top: 1em;width: 8em;border-radius: 5px;color: #fff;font-size: 13pt;font-weight: bold;text-align: center;text-transform: uppercase;}.show-cell-webkit {display: none;}.show-cell-webkit:not(*:root) {display: table-cell;}" }} />
