@@ -96,7 +96,9 @@ tr.hover:hover{
   background: #ddd;
 }
 /*** END ***/
-
+.disabled > a {
+  cursor: default !important;
+}
 .SB {
     color: #555;
     font-weight: bold;

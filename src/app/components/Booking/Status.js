@@ -105,6 +105,11 @@ export class Status extends Component {
             textAlign: 'center',
             WebkitBorderRadius: '0.5em',
           }}
+          style={{
+            backgroundColor: status[this.props.status].color,
+            textAlign: 'center',
+            WebkitBorderRadius: '0.5em',
+          }}
           labelStyle={{
             color: '#fff'
           }}
@@ -118,16 +123,17 @@ export class Status extends Component {
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={this.handleRequestClose.bind(this)}
         >
-          <Menu>
+          <Menu
+            maxHeight={400}
+          >
             {Object.keys(status).map(status_id=>{
               return <MenuItem
                 key={status_id}
                 style={{
-                  backgroundColor: status[status_id].color,
+                  color: status[status_id].color,
                   textAlign: 'center',
                   WebkitBorderRadius: '0.5em',
                   margin: '2px 0',
-                  color: '#fff'
                 }}
                 primaryText={status[status_id].name}
                 onTouchTap={e=>changeStatus(this.props.booking, status_id, ()=>{
