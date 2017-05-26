@@ -12,9 +12,7 @@ const mac = process.platform === 'darwin'
 const modifierKey = mac ? '&#8984;' : 'Ctrl + '
 
 const styles = {
-  divider: {
-    background: "rgb(44, 151, 222)"
-  }
+
 }
 
 //todo remove this and the conditions
@@ -79,9 +77,9 @@ export class MainNavigation extends Component{
           <Dropdown label="Booking" key={Math.random()}>
             <Menu desktop={true} width={256}>
               <MenuItem primaryText="Index" secondaryText={modifierKey + 'I'} onTouchTap={link('index')} />
-              <Divider style={styles.divider}/>
+              <Divider/>
               <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'B'} onTouchTap={link('booking')} />
-              <Divider style={styles.divider}/>
+              <Divider/>
               {this.categories()}
             </Menu>
           </Dropdown>
