@@ -20,7 +20,12 @@ const style = {
   },
   textFieldStyle:{
     width: '100%'
-  }
+  },
+  labels: {
+    fontSize: '16px',
+    paddingBottom: '5px',
+    paddingTop: '5px'
+}
 }
 const pStr = [
   'booking?start_date=',
@@ -46,14 +51,14 @@ export class Sidebar extends Component{
   render(){
     return(
       <div style={style.sidebar}>
-        <h2 style={{fontWeight: 'bold'}}>Search</h2>
-        <label>Category</label>
+        <h2 style={{fontWeight: 'bolder', fontSize: '20px'}}>Search</h2>
+        <label style={style.labels}>Category</label>
         <CategorySelect
           key={this.props.category}
           category={this.props.category}
           setCategory={this.setCategory.bind(this)}
         />
-        <label>Start:</label>
+        <label style={style.labels}>Start:</label>
         <DatePicker
           hintText="Start Date"
           container="inline"
@@ -64,7 +69,7 @@ export class Sidebar extends Component{
             this.setStart(moment(date).format('YYYYMMDD'))
           }).bind(this)}
         />
-        <label>End:</label>
+        <label style={style.labels}>End:</label>
         <DatePicker
           hintText="Start End"
           container="inline"

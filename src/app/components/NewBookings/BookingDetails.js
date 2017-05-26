@@ -21,7 +21,13 @@ const style = {
     marginBottom: 0,
     marginLeft: 'auto',
     display: 'block',
-    whiteSpace: 'pre-wrap'
+    whiteSpace: 'pre-wrap',
+  },
+  itemName: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: "rgb(44, 151, 222)",
+
   },
 }
 export default class BookingDetails extends Component {
@@ -120,9 +126,11 @@ export default class BookingDetails extends Component {
     }else{
       return(
         <div style={style.center}>
-          <h2>
-            {this.state.item.name}
-          </h2>
+          <div style={style.titleBar}>
+            <h2 style={style.itemName}>
+              {this.state.item.name}
+            </h2>
+          </div>
           {this.childSelect()}
           <div key={this.state.child.item_id}>
             {this.state.child && this.book()}
