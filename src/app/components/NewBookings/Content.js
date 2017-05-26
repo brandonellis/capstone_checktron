@@ -39,18 +39,21 @@ const style = {
     width: '15%'
   },
   thCol1: {
-    fontSize: '18px'
+    fontSize: '18px',
+    color: '#434343',
   },
   thCol2: {
     textAlign: 'right',
     width: '1px',
     whiteSpace: 'nowrap',
-    fontSize: '18px'
+    fontSize: '18px',
+    color: '#434343',
   },
   thCol3: {
     textAlign: 'center',
     width: '15%',
-    fontSize: '18px'
+    fontSize: '18px',
+    color: '#434343',
   },
   center: {
     marginTop: 0,

@@ -80,7 +80,7 @@ export class MainNavigation extends Component{
             <Menu desktop={true} width={256}>
               <MenuItem primaryText="Index" secondaryText={modifierKey + 'I'} onTouchTap={link('index')} />
               <Divider style={styles.divider}/>
-              <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'N'} onTouchTap={link('booking')} />
+              <MenuItem primaryText="New Booking" secondaryText={modifierKey + 'B'} onTouchTap={link('booking')} />
               <Divider style={styles.divider}/>
               {this.categories()}
             </Menu>
