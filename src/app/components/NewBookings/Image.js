@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Paper from 'material-ui/Paper'
-import {config} from '../../config/config'
+import session from '../../utils/session'
 
 const style = {
   height: 'auto',
@@ -13,10 +13,12 @@ const style = {
 
 export class Image extends Component{
   getSrc(){
-    if(this.props.giftCert) return config.api.base + 'images/giftcertificate.png'
-    if(typeof(this.props.image) === 'object'){
-      for(var key in this.props.image){
-        return config.api.base + "media/S" + this.props.image[key].src + ".jpg"
+    if(session.url){
+      if(this.props.giftCert) return session.url + 'images/giftcertificate.png'
+      if(typeof(this.props.image) === 'object'){
+        for(var key in this.props.image){
+          return session.url + "media/S" + this.props.image[key].src + ".jpg"
+        }
       }
     }
     return 'images/Checkfront.jpg'

@@ -3,8 +3,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import {blue500} from 'material-ui/styles/colors'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import MainNavigation from './components/Nav/MainNavigation'
+import LoginNavigation from './components/Nav/LoginNavigation'
 import Mousetrap from 'Mousetrap'
 import { hashHistory } from 'react-router'
+import session from './utils/session'
+
 
 export class App extends Component{
   constructor(props) {
@@ -16,13 +19,21 @@ export class App extends Component{
   }
   componentDidMount() {
     Mousetrap.bind(['ctrl+i', 'command+i'], ()=>{hashHistory.push('index')})
-    Mousetrap.bind(['ctrl+b', 'command+b'], ()=>{hashHistory.push('booking')})
+    Mousetrap.bind(['ctrl+n', 'command+n'], ()=>{hashHistory.push('booking')})
   }
   componentWillUnmount() {
     Mousetrap.unbind(['ctrl+i', 'command+i'])
-    Mousetrap.unbind(['ctrl+b', 'command+b'])
+    Mousetrap.unbind(['ctrl+n', 'command+n'])
   }
   render(){
+    var nav = [<LoginNavigation key='nav0' />]
+    if(this.props.children.props.location.pathname !== '/login'){
+      session.loggedIn((loggedIn)=>{
+       if(!loggedIn)
+         hashHistory.push('/login')
+      })
+      nav = [<MainNavigation key='nav1' />]
+    }
     return(
       <MuiThemeProvider muiTheme={
         getMuiTheme({
@@ -35,7 +46,7 @@ export class App extends Component{
         })
       }>
         <div>
-          <MainNavigation />
+          {nav}
           {this.props.children}
         </div>
       </MuiThemeProvider>

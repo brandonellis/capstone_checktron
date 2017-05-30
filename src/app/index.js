@@ -10,6 +10,7 @@ import BookingIndex from './containers/BookingIndex'
 import NewBooking from './containers/NewBooking'
 import BookingForm from './containers/BookingForm'
 import Booking from './containers/Booking'
+import Login from './containers/Login'
 
 // Needed for onTouchTap
 injectTapEventPlugin();
@@ -22,6 +23,7 @@ render(
       <Route path='booking_page' component={Booking} />
       <Route path='index' component={BookingIndex} />
       <Route path='booking_form' component={BookingForm} />
+      <Route path='login' component={Login} />
     </Route>
   </Router>,
   document.getElementById('app')

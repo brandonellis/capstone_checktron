@@ -1,27 +1,24 @@
-import {config} from '../config/config.js'
 import {hashHistory} from 'react-router'
+import session from './session'
 
-try{
-	var axios = require('axios').create(require('../config/api.js').api)
-}catch(err){
-	console.log("Dev Error: missing api.js (checktron/jsx/config/api.).\n	export default {\n	  baseURL: 'https://<name>.checkfront.com/api/3.0/',\n	  auth: {\n	    username: '<token>',\n	    password: '<secret>'\n	  }\n	}")
-	var axios = require('axios').create({baseURL: config.api.hostname})
-}
-
-
+//A render may be attempted befor login confrimation is complete
 export function getCategoryNames(func){
-	axios.get('category').then((resp)=>{
-		var category = resp.data.category
-		var categoryNames = []
-		for(var key in category){
-			if(category[key].name === 'Gifts') continue
-			categoryNames.push({name: category[key].name, id: key})
-		}
-		categoryNames.sort((a, b) => a.name.localeCompare(b.name))
-    func(categoryNames)
-	}).catch(e => {
+	try{
+		session.axios.get('category').then((resp)=>{
+			var category = resp.data.category
+			var categoryNames = []
+			for(var key in category){
+				if(category[key].name === 'Gifts') continue
+				categoryNames.push({name: category[key].name, id: key})
+			}
+			categoryNames.sort((a, b) => a.name.localeCompare(b.name))
+	    func(categoryNames)
+		}).catch(e => {
+			func([])
+		})
+	}catch(e){
 		func([])
-	})
+	}
 }
 
 export function getItemList(start, end, category, func){
@@ -29,7 +26,7 @@ export function getItemList(start, end, category, func){
 	if(category != null){
 		query += '&category_id=' + category
 	}
-	axios.get('item'+query).then((resp)=>{
+	session.axios.get('item'+query).then((resp)=>{
 		var items = resp.data.items
 		var itemList = []
 		for(var key in items){
@@ -52,12 +49,13 @@ export function getItemList(start, end, category, func){
 		}
 		func(itemList)
 	}).catch(e => {
+		console.log(e)
 		func(null)
 	})
 }
 
 export function getItem(item, start, end, func){
-	axios.get(
+	session.axios.get(
 		'item/' + item + '?start_date=' + start + '&end_date=' + end
 	).then((resp)=>{
 		func(resp.data.item)
@@ -74,7 +72,7 @@ export function getItemSlip(item_id, start_date, end_date, start_time, end_time,
 	if(end_time !== null) query += '&end_time=' + end_time
 	if(timeslot !== null) query += '&timeslot=' + timeslot
 	for(var key in param) query += '&param[' + key + ']=' + param[key]
-	axios.get(query).then((resp)=>{
+	session.axios.get(query).then((resp)=>{
 		func(resp.data.item)
 	}).catch(e=>{
 		console.log(e)
@@ -84,8 +82,8 @@ export function getItemSlip(item_id, start_date, end_date, start_time, end_time,
 
 export function getSession(slip, session_id, func){
 	//alert(session_id)
-	axios.post('booking/session/clear').then(()=>{
-		axios.post('booking/session', {slip: slip}).then(resp=>{
+	session.axios.post('booking/session/clear').then(()=>{
+		session.axios.post('booking/session', {slip: slip}).then(resp=>{
 			func(resp.data.booking.session)
 		}).catch(e=>{
 			console.log(e)
@@ -95,7 +93,7 @@ export function getSession(slip, session_id, func){
 }
 
 export function getForm(func){
-	axios.get('booking/form')
+	session.axios.get('booking/form')
 	.then(resp=>{
 		func(resp.data)
 	})
@@ -106,7 +104,7 @@ export function getForm(func){
 }
 
 export function createBooking(session_id, form, func){
-	axios.post('booking/create', {form: form, session_id: session_id})
+	session.axios.post('booking/create', {form: form, session_id: session_id})
 	.then(resp=>{
 		console.log(JSON.stringify(resp.data, null, 4))
 		func(resp.data)
@@ -118,7 +116,7 @@ export function createBooking(session_id, form, func){
 
 export function getBookings(page, func){
 	//alert('booking/index?page=' + page)
-	axios.get('booking/index?page=' + page)
+	session.axios.get('booking/index?page=' + page)
 	.then(resp=>{
 		//console.log(JSON.stringify(resp.data,null,4))
 		func(resp.data)
@@ -131,7 +129,7 @@ export function getBookings(page, func){
 
 export function getBookingInfo(id, func){
 	//alert('booking/index?page=' + page)
-	axios.get('booking/' + id)
+	session.axios.get('booking/' + id)
 	.then(resp=>{
 		//console.log(JSON.stringify(resp.data,null,4))
 		func(resp.data.booking)
@@ -144,7 +142,7 @@ export function getBookingInfo(id, func){
 
 export function getBookingPolicy(func){
 	//alert('booking/index?page=' + page)
-	axios.get('booking/form')
+	session.axios.get('booking/form')
 	.then(resp=>{
 		//alert(JSON.stringify(resp.data.booking_policy.body,null,4))
 		func(resp.data.booking_policy.body)
@@ -156,7 +154,7 @@ export function getBookingPolicy(func){
 }
 
 export function getCompanyInfo(func){
-	axios.get('company')
+	session.axios.get('company')
 	.then(resp=>{
 		//alert(JSON.stringify(resp.data,null,4))
 		func(resp.data.company)
@@ -168,7 +166,7 @@ export function getCompanyInfo(func){
 }
 
 export function changeStatus(booking, status, func){
-	axios.get('booking/' + booking + '/update?status_id=' + status)
+	session.axios.get('booking/' + booking + '/update?status_id=' + status)
 	.then(resp=>{
 		//alert(JSON.stringify(resp.data))
 		func()
