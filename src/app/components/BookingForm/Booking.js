@@ -33,6 +33,7 @@ const style = {
   },
   subtotalRight: {
     textAlign: "right",
+    fontSize: '15px',
   },
   col: {
     borderStyle: 'none',
@@ -43,6 +44,22 @@ const style = {
     width: '1%',
     whiteSpace: 'nowrap'
   },
+  formTitle: {
+      fontSize: '25px',
+      fontWeight: 'bold',
+      color: '#787878',
+      textAlign: 'center',
+  },
+  formContainer: {
+      width: '70%',
+      margin: 'auto',
+  },
+  orderTitle: {
+      fontSize: '27px',
+      fontWeight: 'bold',
+      color: 'black',
+      paddingBottom: '5px',
+  }
 }
 
 export class Booking extends Component {
@@ -75,6 +92,7 @@ export class Booking extends Component {
             <h2>Session={this.state.session.id}</h2>
           </div>
           */}
+            <p style={style.orderTitle}>Order Summary</p>
           <table>
             <BookingTableHead />
             <BookingTableItems session={this.state.session} />
@@ -147,7 +165,7 @@ class CartTotal extends Component {
     return (
       <tfoot>
         <tr>
-          <td  style={style.subtotalRight} colSpan='3'>
+          <td style={style.subtotalRight} colSpan='3'>
             <div>Sub-Total: ${session.sub_total}</div>
             <div>Taxes ({Object.keys(session.tax)[0] && session.tax[Object.keys(session.tax)[0]].amount}%): ${session.tax_total}</div>
             <div>Total {session.currency_id}: ${session.total}</div>
@@ -260,24 +278,26 @@ class Items extends React.Component {
       <div style={{marginTop:40}}>
         <Paper zDepth={2}>
           <div style={{padding:20}}>
-            <h2>Customer Form</h2>
-            <ul>
-              {mapObject(this.state.bookingForm, (key, value)=>{
-                return(
-                  <li key={key}>{this.createInput(key, value, r)}</li>
-                )
-              })}
-              <br />
-              <li>
-                <RaisedButton
-                  key={r.incomplete? 'disabled' : 'enabled'}
-                  label="Submit"
-                  disabled={r.incomplete ? true : false}
-                  style={style}
-                  onTouchTap={e=>{createBooking(this.props.session, this.state.form, this.bookingPage)}}
-                />
-              </li>
-            </ul>
+            <p style={style.formTitle}>Customer Form</p>
+                <div style={style.formContainer}>
+                    <ul>
+                      {mapObject(this.state.bookingForm, (key, value)=>{
+                        return(
+                          <li key={key}>{this.createInput(key, value, r)}</li>
+                        )
+                      })}
+                      <br />
+                      <li>
+                        <RaisedButton
+                          key={r.incomplete? 'disabled' : 'enabled'}
+                          label="Submit"
+                          disabled={r.incomplete ? true : false}
+                          style={{backgroundColor: 'blue', disabledBackgroundColor: 'black'}}
+                          onTouchTap={e=>{createBooking(this.props.session, this.state.form, this.bookingPage)}}
+                        />
+                      </li>
+                    </ul>
+                </div>
           </div>
         </Paper>
         <br />

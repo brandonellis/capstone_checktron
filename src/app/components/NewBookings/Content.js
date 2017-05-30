@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 //import {render} from 'react-dom'
 import BookingDetails from './BookingDetails'
 import {getItemList} from '../../utils/apiHelper'
@@ -26,16 +27,33 @@ const style = {
     paddingRight: 15,
     position: 'relative'
   },
-  col1: {
-
-  },
+  col1: {  },
   col2: {
     textAlign: 'right',
-    width: '30%'
+    width: '1px',
+    whiteSpace: 'nowrap',
+    fontSize: '16px'
   },
   col3: {
     textAlign: 'center',
-    width: '1%'
+    width: '15%'
+  },
+  thCol1: {
+    fontSize: '18px',
+    color: '#434343',
+  },
+  thCol2: {
+    textAlign: 'right',
+    width: '1px',
+    whiteSpace: 'nowrap',
+    fontSize: '18px',
+    color: '#434343',
+  },
+  thCol3: {
+    textAlign: 'center',
+    width: '15%',
+    fontSize: '18px',
+    color: '#434343',
   },
   center: {
     marginTop: 0,
@@ -43,6 +61,9 @@ const style = {
     marginBottom: 0,
     marginLeft: 'auto',
     display: 'block',
+  },
+  tableHeader: {
+    fontSize: "24px"
   },
 }
 
@@ -104,13 +125,15 @@ export class Content extends Component{
       )
     }else if(this.state.items.length > 0){
       return(
-        <table style={{maxWidth: 1365, marginBottom: 20}}>
-          <thead><tr>
-            <th style={style.col1}>Item</th>
-            <th style={style.col2}>Price</th>
-            <th style={style.col3}>Status</th>
-          </tr></thead>
-          <tbody>
+        <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto'}} fixedHeader={false}>
+          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+            <TableRow style={{backgroundColor: "#eee"}}>
+              <TableHeaderColumn style={style.thCol1}>Item</TableHeaderColumn>
+              <TableHeaderColumn style={style.thCol2}>Price</TableHeaderColumn>
+              <TableHeaderColumn style={style.thCol3}>Status</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
             {this.state.items.map((item) => {
               var price = item.price
               if(price === '$0.00' ||
@@ -123,8 +146,8 @@ export class Content extends Component{
                     }
               }
               return (
-                <tr key={item.id} className='hover'>
-                  <td style={style.col1}>
+                <TableRow key={item.id} className='hover'>
+                  <TableRowColumn style={style.col1}>
                     <a
                       href='#'
                       onClick={e=>{
@@ -139,18 +162,18 @@ export class Content extends Component{
                         <em>{item.sku}</em>
                       </div>
                     </a>
-                  </td>
-                  <td style={style.col2}>{price}</td>
-                  <td style={style.col3}>
+                  </TableRowColumn>
+                  <TableRowColumn style={style.col2}>{price}</TableRowColumn>
+                  <TableRowColumn style={style.col3}>
                     <div className={'ct-item-status ' + item.status}>
                       {item.avail}
                     </div>
-                  </td>
-                </tr>
+                  </TableRowColumn>
+                </TableRow>
               )
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       )
     }else{
       return(
@@ -178,7 +201,7 @@ export class Content extends Component{
     return(
       <div style={style.container}>
         <div style={style.content}>
-          <h1>
+          <h1 style={{fontWeight: "300", color: "#48535e", paddingBottom: "10px"}}>
             New Booking:
             &nbsp;&nbsp;
             {this.date()}

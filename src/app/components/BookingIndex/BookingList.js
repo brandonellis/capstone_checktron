@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Bookings from './Bookings'
 import {getBookings} from '../../utils/apiHelper'
 import CircularProgress from 'material-ui/CircularProgress'
+import moment from 'moment'
 
 const style = {
   container:{
@@ -11,6 +12,12 @@ const style = {
     left: 0,
     bottom: 0,
     right: 0
+  },
+  bookingTableHeader: {
+    fontWeight: "300",
+    color: "#48535e",
+    paddingTop: "8px",
+    paddingBottom: "1px",
   }
 }
 
@@ -35,6 +42,12 @@ export class BookingList extends Component{
   componentDidMount(){
     getBookings(this.state.page, this.setBookings.bind(this))
   }
+  date(){
+      return(
+          moment().format('ddd MMM DD, YYYY')
+      )
+  }
+
   render(){
     if(this.state.loading){
       getBookings(this.state.page, this.setBookings.bind(this))
@@ -102,7 +115,11 @@ export class BookingList extends Component{
     return(
       <div style={style.container}>
         <div className="container">
-          <h1>Bookings</h1>
+          <h1 style={style.bookingTableHeader}>
+            Booking Index:
+            &nbsp;&nbsp;
+            {this.date()}
+          </h1>
           <ul className="pagination pagination-sm">
             {pageSelect}
           </ul>
