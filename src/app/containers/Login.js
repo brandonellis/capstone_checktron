@@ -39,7 +39,7 @@ export default class Login extends Component{
             </div>
             <Divider />
             <TextField
-              hintText="Base URL, https://___________.checkfront.com/"
+              hintText="Base URL"
               style={{marginLeft: 20}}
               underlineShow={false}
               fullWidth={true}
