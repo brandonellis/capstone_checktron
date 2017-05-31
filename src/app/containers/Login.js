@@ -22,6 +22,7 @@ export default class Login extends Component{
     super(props)
     this.state = {url: '', user: '', pass: ''}
   }
+
   render(){
     return(
       <div style={style.content}>
@@ -29,7 +30,12 @@ export default class Login extends Component{
           <Paper zDepth={2}>
             <Divider />
             <div style={{padding: 15}}>
-              <h2 style={{margin: 0, padding: 0}}>Token Authentication</h2>
+              <h2 style={{margin: 0, padding: 0}}>Token Authentication&nbsp;&nbsp;&nbsp;
+              {typeof this.state.error === 'string' &&
+                <span style={{fontSize: '85%', color: '#D22'}}>
+                  {this.state.error}
+                </span>
+              }</h2>
             </div>
             <Divider />
             <TextField
@@ -60,8 +66,12 @@ export default class Login extends Component{
               <RaisedButton label="Submit" style={{margin: 0}}
                 onTouchTap={(e=>{
                   session.logIn(this.state.url, this.state.user, this.state.pass, (loggedIn)=>{
-                    if(loggedIn)
+                    if(loggedIn){
+                      this.setState({error: undefined})
                       hashHistory.push('/')
+                    }
+                    else
+                      this.setState({error: 'Connection to API Failed'})
                   })
                 })} />
             </div>
