@@ -71,7 +71,7 @@ export class MainNavigation extends Component{
     return(
       <div style={style.navbar}>
         <div style={style.navbarLeft}>
-          <a style={style.navbarItem} className='ct-nav-item' href='#'>
+          <a style={style.navbarItem} className='ct-nav-item' href='#/dashboard'>
             <img style={style.navbarImage} src='images/logo.png' />
           </a>
           <Dropdown label="Booking" key={Math.random()}>

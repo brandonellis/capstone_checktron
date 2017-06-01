@@ -35,7 +35,9 @@ export class LoginNavigation extends Component{
     return(
       <div style={style.navbar}>
         <div style={style.navbarLeft}>
-          <a style={style.navbarItem} className='ct-nav-item' href='#'>
+          <a style={style.navbarItem} className='ct-nav-item' href='#' onClick={e=>{
+            e.preventDefault()
+          }}>
             <img style={style.navbarImage} src='images/logo.png' />
           </a>
         </div>

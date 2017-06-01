@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from './store'
 
 class Session{
   //make sure there is only one instance
@@ -6,12 +7,12 @@ class Session{
 
   constructor(){
     //return existing instance or make new
-    if(this.instance){
-      return this.instance
+    if(Session.instance){
+      return Session.instance
     }
     this.axios = false
     this.url = false
-    this.instance = this
+    Session.instance = this
   }
 
   logIn(url, user, pass, func){
@@ -38,12 +39,14 @@ class Session{
       }).catch(error=>{
         this.axios = false
         this.url = false
+        console.log(error)
         func(false)
       })
     }catch(error){
       this.axios = false
       this.url = false
       func(false)
+      console.log(error)
     }
   }
 }

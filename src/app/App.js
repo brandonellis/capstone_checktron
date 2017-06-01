@@ -27,10 +27,10 @@ export class App extends Component{
   }
   render(){
     var nav = [<LoginNavigation key='nav0' />]
-    if(this.props.children.props.location.pathname !== '/login'){
+    if(this.props.children.props.location.pathname !== '/'){
       session.loggedIn((loggedIn)=>{
        if(!loggedIn)
-         hashHistory.push('/login')
+         hashHistory.push('/')
       })
       nav = [<MainNavigation key='nav1' />]
     }

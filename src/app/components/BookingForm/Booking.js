@@ -234,7 +234,7 @@ class Items extends React.Component {
                       rows={type ? 2 : 1}
                       fullWidth={true}
                       floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
-                      onBlur = {((e)=>this.handleInput(e, e.target.value, key)).bind(this)}
+                      onChange = {((e)=>this.handleInput(e, e.target.value, key)).bind(this)}
                       //floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                   />
               )
