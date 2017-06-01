@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import session from '../utils/session'
+import store from '../utils/store'
 
 const style = {
   content:{
@@ -20,7 +21,10 @@ const style = {
 export default class Login extends Component{
   constructor(props){
     super(props)
-    this.state = {url: '', user: '', pass: ''}
+    var url = store.get('url')
+    var user = store.get('user')
+    var pass = store.get('pass')
+    this.state = {url: (url ? url : ''), user: (user ? user : ''), pass: (pass ? pass : '')}
   }
 
   render(){
@@ -39,6 +43,7 @@ export default class Login extends Component{
             </div>
             <Divider />
             <TextField
+              defaultValue={this.state.url}
               hintText="Base URL"
               style={{marginLeft: 20}}
               underlineShow={false}
@@ -47,6 +52,7 @@ export default class Login extends Component{
             />
             <Divider />
             <TextField
+              defaultValue={this.state.user}
               hintText="API Key"
               style={{marginLeft: 20}}
               underlineShow={false}
@@ -55,11 +61,13 @@ export default class Login extends Component{
             />
             <Divider />
             <TextField
+              defaultValue={this.state.pass}
               hintText="API Secret"
               style={{marginLeft: 20}}
               underlineShow={false}
               fullWidth={true}
               onChange={(e=>{this.setState({pass: e.target.value})})}
+              type="password"
             />
             <Divider />
             <div style={{padding: 15}}>
@@ -67,8 +75,11 @@ export default class Login extends Component{
                 onTouchTap={(e=>{
                   session.logIn(this.state.url, this.state.user, this.state.pass, (loggedIn)=>{
                     if(loggedIn){
+                      store.set('url', this.state.url)
+                      store.set('user', this.state.user)
+                      store.set('pass', this.state.pass)
                       this.setState({error: undefined})
-                      hashHistory.push('/')
+                      hashHistory.push('dashboard')
                     }
                     else
                       this.setState({error: 'Connection to API Failed'})

@@ -18,12 +18,12 @@ injectTapEventPlugin();
 render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Dashboard} />
+      <IndexRoute component={Login} />
       <Route path='booking' component={NewBooking} />
       <Route path='booking_page' component={Booking} />
       <Route path='index' component={BookingIndex} />
       <Route path='booking_form' component={BookingForm} />
-      <Route path='login' component={Login} />
+      <Route path='dashboard' component={Dashboard} />
     </Route>
   </Router>,
   document.getElementById('app')

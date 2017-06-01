@@ -42,7 +42,8 @@ const config = {
   externals: [
     (function () {
       var IGNORES = [
-        'electron'
+        'electron',
+        'fs'
       ];
       return function (context, request, callback) {
         if (IGNORES.indexOf(request) >= 0) {
