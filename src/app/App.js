@@ -14,7 +14,8 @@ export class App extends Component{
     super(props)
     this.state = {
       local: 'en-US',
-      theme: 'light'
+      theme: 'light',
+      connected: false,
     }
   }
   componentDidMount() {
@@ -25,15 +26,20 @@ export class App extends Component{
     Mousetrap.unbind(['ctrl+i', 'command+i'])
     Mousetrap.unbind(['ctrl+n', 'command+n'])
   }
+  nav(){
+    if(this.state.connected) return <MainNavigation key='nav1' />
+    return <LoginNavigation key='nav0' />
+  }
   render(){
-    var nav = [<LoginNavigation key='nav0' />]
-    if(this.props.children.props.location.pathname !== '/'){
-      session.loggedIn((loggedIn)=>{
-       if(!loggedIn)
-         hashHistory.push('/')
-      })
-      nav = [<MainNavigation key='nav1' />]
-    }
+    //checks if this page can be accessed without an api connection
+    session.loggedIn((loggedIn)=>{
+      if(!loggedIn && this.props.location.pathname !== '/' && this.props.location.pathname !== '/api_connections' && this.props.location.pathname !== 'api_connections'){
+        console.log(this.props.location.pathname)
+        hashHistory.push('/')
+      }
+      if(loggedIn != this.state.connected)
+        this.setState({connected: loggedIn})
+    })
     return(
       <MuiThemeProvider muiTheme={
         getMuiTheme({
@@ -46,7 +52,7 @@ export class App extends Component{
         })
       }>
         <div>
-          {nav}
+          {this.nav()}
           {this.props.children}
         </div>
       </MuiThemeProvider>

@@ -116,9 +116,9 @@ export class BookingList extends Component{
       <div style={style.container}>
         <div className="container">
           <h1 style={style.bookingTableHeader}>
-            Booking Index:
+            Booking Index{/*:
             &nbsp;&nbsp;
-            {this.date()}
+            {this.date()}*/}
           </h1>
           <ul className="pagination pagination-sm">
             {pageSelect}

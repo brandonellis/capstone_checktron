@@ -3,7 +3,7 @@ import session from '../utils/session'
 import RaisedButton from 'material-ui/RaisedButton'
 import { hashHistory } from 'react-router'
 
-export class Dashboard extends Component{
+export default class Dashboard extends Component{
   render(){
     return(
       <div>
@@ -17,5 +17,3 @@ export class Dashboard extends Component{
     )
   }
 }
-
-export default Dashboard

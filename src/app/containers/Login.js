@@ -6,9 +6,10 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import session from '../utils/session'
 import store from '../utils/store'
+import AutoComplete from 'material-ui/AutoComplete'
 
 const style = {
-  content:{
+  content: {
     overflowY: 'auto',
     position: 'fixed',
     top: 60,
@@ -16,17 +17,43 @@ const style = {
     bottom: 0,
     right: 0
   },
+  table: {
+    border: 'none'
+  },
+  colText: {
+    border: 'none',
+    whiteSpace: 'nowrap',
+    width: '15%'
+  },
+  col: {
+    border: 'none'
+  }
 }
 
 export default class Login extends Component{
   constructor(props){
     super(props)
-    var url = store.get('url')
-    var user = store.get('user')
-    var pass = store.get('pass')
-    this.state = {url: (url ? url : ''), user: (user ? user : ''), pass: (pass ? pass : '')}
+    var urlList = store.getUrl()
+    this.state = {
+      url: '',
+      apiKey: '',
+      urlList: urlList,
+      apiKeyList: [],
+      apiSecret: ''
+    }
   }
-
+  setAutoCompleteState(url, apiKey){
+    var urlList = store.getUrl()
+    var apiKeyList = store.getApiKey(url)
+    var apiSecret = store.getApiSecret(url, apiKey)
+    this.setState({
+      url: (typeof url === 'string' ? url : ''),
+      apiKey: (typeof apiKey === 'string' ? apiKey : ''),
+      urlList: urlList,
+      apiKeyList: apiKeyList,
+      apiSecret: apiSecret
+    })
+  }
   render(){
     return(
       <div style={style.content}>
@@ -41,43 +68,60 @@ export default class Login extends Component{
                 </span>
               }</h2>
             </div>
-            <Divider />
-            <TextField
-              defaultValue={this.state.url}
-              hintText="Base URL"
-              style={{marginLeft: 20}}
-              underlineShow={false}
-              fullWidth={true}
-              onChange={(e=>{this.setState({url: e.target.value})})}
-            />
-            <Divider />
-            <TextField
-              defaultValue={this.state.user}
-              hintText="API Key"
-              style={{marginLeft: 20}}
-              underlineShow={false}
-              fullWidth={true}
-              onChange={(e=>{this.setState({user: e.target.value})})}
-            />
-            <Divider />
-            <TextField
-              defaultValue={this.state.pass}
-              hintText="API Secret"
-              style={{marginLeft: 20}}
-              underlineShow={false}
-              fullWidth={true}
-              onChange={(e=>{this.setState({pass: e.target.value})})}
-              type="password"
-            />
-            <Divider />
+            <div style={{padding: '0 20px'}}><table style={style.table}>
+              <tbody>
+                <tr>
+                  <td style={style.colText}>
+                    Base URL
+                  </td>
+                  <td style={style.col}>
+                    <AutoComplete
+                    name="url"
+                      dataSource={this.state.urlList}
+                      fullWidth={true}
+                      onBlur={(e=>{this.setAutoCompleteState(e.target.value)})}
+                    />
+                  </td>
+                  <td style={style.colText}>
+                    .checkfront.com
+                  </td>
+                </tr>
+                <tr>
+                  <td style={style.colText}>
+                    API Key
+                  </td>
+                  <td colSpan="2" style={style.col}>
+                    <AutoComplete
+                      name="apiKey"
+                      key={this.state.url+'02'}
+                      dataSource={this.state.apiKeyList}
+                      fullWidth={true}
+                      onBlur={(e=>{this.setAutoCompleteState(this.state.url, e.target.value)})}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td style={style.colText}>
+                    API Secret
+                  </td>
+                  <td colSpan="2" style={style.col}>
+                    <TextField
+                      name='apiSecret'
+                      key={this.state.apiKey+'03'}
+                      defaultValue={this.state.apiSecret}
+                      fullWidth={true}
+                      onChange={(e=>{this.setState({apiSecret: e.target.value})})}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table></div>
             <div style={{padding: 15}}>
               <RaisedButton label="Submit" style={{margin: 0}}
                 onTouchTap={(e=>{
-                  session.logIn(this.state.url, this.state.user, this.state.pass, (loggedIn)=>{
+                  session.logIn(this.state.url, this.state.apiKey, this.state.apiSecret, (loggedIn)=>{
                     if(loggedIn){
-                      store.set('url', this.state.url)
-                      store.set('user', this.state.user)
-                      store.set('pass', this.state.pass)
+                      store.setAuth(this.state.url, this.state.apiKey, this.state.apiSecret)
                       this.setState({error: undefined})
                       hashHistory.push('dashboard')
                     }

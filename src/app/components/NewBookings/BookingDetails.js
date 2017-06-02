@@ -40,6 +40,11 @@ export default class BookingDetails extends Component {
   }
   setItem(item){
     this.setState({item: item, child: item, loading: false})
+    if(this.state.item.product_group_type === 'P'){
+      if(this.state.item.product_group_children.length > 0){
+        getItem(this.state.item.product_group_children[0].item_id, this.props.start_date, this.props.end_date, this.setChild.bind(this))
+      }
+    }
   }
   setChild(child){
     this.setState({child: child, loading: false})
@@ -105,7 +110,7 @@ export default class BookingDetails extends Component {
             value={childId}
             onChange={((e, i, value) => {
               getItem(value, this.props.start_date, this.props.end_date, this.setChild.bind(this))
-            }).bind(this)}
+            })}
           >
             {this.state.item.product_group_children.map((child) => {
               return(

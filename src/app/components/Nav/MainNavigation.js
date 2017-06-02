@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { hashHistory } from 'react-router'
+import Dropdown from './Dropdown'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
 import {getCategoryNames} from '../../utils/apiHelper'
-import Dropdown from './Dropdown'
 import style from './style'
+import session from '../../utils/session'
 const path = require('path')
 
 const mac = process.platform === 'darwin'
@@ -83,6 +84,11 @@ export class MainNavigation extends Component{
               {this.categories()}
             </Menu>
           </Dropdown>
+          <Dropdown label="Manage" key={Math.random()}>
+            <Menu desktop={true} width={256}>
+              <MenuItem primaryText="API Connections" onTouchTap={link('api_connections')} />
+            </Menu>
+          </Dropdown>
           {/*}
           <Dropdown label="Dev" key={Math.random()}>
             <Menu desktop={true} width={256}>
@@ -93,6 +99,11 @@ export class MainNavigation extends Component{
           {*/}
         </div>
         <div style={style.navbarRight} className="ct-nav-win-icons">
+          <a href="#" onClick={e=>{
+            session.logOut()
+          }}>
+            <img style={style.winIcon} src="images/logoff.png" />
+          </a>
           <a href="#" onClick={(e)=>{
             e.preventDefault()
             alert('TODO: modal dialog with tabs [keybord shortcuts|TODO:think of more tabs]')
