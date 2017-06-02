@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { hashHistory } from 'react-router'
+import Dropdown from './Dropdown'
+import Menu from 'material-ui/Menu'
+import MenuItem from 'material-ui/MenuItem'
 import style from './style'
 const path = require('path')
 
@@ -13,7 +16,12 @@ try{
 }catch(e){
   remote = false
 }
-
+function link(path){
+  return e=>{
+    e.preventDefault()
+    hashHistory.push(path)
+  }
+}
 function minimize(e) {
   e.preventDefault()
   if(remote) remote.getCurrentWindow().minimize()
@@ -35,11 +43,15 @@ export class LoginNavigation extends Component{
     return(
       <div style={style.navbar}>
         <div style={style.navbarLeft}>
-          <a style={style.navbarItem} className='ct-nav-item' href='#' onClick={e=>{
-            e.preventDefault()
-          }}>
+          <a style={style.navbarItem} className='ct-nav-item' href='#'>
             <img style={style.navbarImage} src='images/logo.png' />
           </a>
+          <Dropdown label="Manage" key={Math.random()}>
+            <Menu desktop={true} width={256}>
+              <MenuItem primaryText="Log In" onTouchTap={link('/')} />
+              <MenuItem primaryText="API Connections" onTouchTap={link('api_connections')} />
+            </Menu>
+          </Dropdown>
         </div>
         <div style={style.navbarRight} className="ct-nav-win-icons">
           <a href="#" onClick={(e)=>{

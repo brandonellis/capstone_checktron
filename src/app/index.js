@@ -11,6 +11,7 @@ import NewBooking from './containers/NewBooking'
 import BookingForm from './containers/BookingForm'
 import Booking from './containers/Booking'
 import Login from './containers/Login'
+import ApiConnections from './containers/ApiConnections'
 
 // Needed for onTouchTap
 injectTapEventPlugin();
@@ -24,6 +25,7 @@ render(
       <Route path='index' component={BookingIndex} />
       <Route path='booking_form' component={BookingForm} />
       <Route path='dashboard' component={Dashboard} />
+      <Route path='api_connections' component={ApiConnections} />
     </Route>
   </Router>,
   document.getElementById('app')

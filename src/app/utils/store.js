@@ -26,12 +26,43 @@ class ApiInfo{
       console.log(error)
     }
   }
-  get(key){
-    return this.data[key]
-  }
-  set(key, value){
-    this.data[key] = value
+  //new
+  setAuth(url, apiKey, apiSecret){
+    if(!this.data.auth) this.data.auth = {}
+    if(!this.data.auth[url]) this.data.auth[url] = {}
+    this.data.auth[url][apiKey] = apiSecret
     this.save()
+  }
+  //get a lists of options for url, (auto complete)
+  getUrl(){
+    if(!this.data.auth) return []
+    return Object.keys(this.data.auth)
+  }
+  //get list of api keys, (auto complete)
+  getApiKey(url){
+    var dataList = []
+    if(!this.data.auth || !this.data.auth[url]) return []
+    return Object.keys(this.data.auth[url])
+  }
+  getApiSecret(url, apiKey){
+    var dataList = []
+    if(!this.data.auth || !this.data.auth[url] || !this.data.auth[url][apiKey]) return ''
+    return this.data.auth[url][apiKey]
+  }
+  removeUrl(url){
+    if(this.data.auth && this.data.auth[url]){
+      delete this.data.auth[url]
+      this.save()
+    }
+  }
+  removeApiKey(url, apiKey){
+    if(this.data.auth && this.data.auth[url] && this.data.auth[url][apiKey]){
+      delete this.data.auth[url][apiKey]
+      if(Object.keys(this.data.auth[url]).length < 1){
+        delete this.data.auth[url]
+      }
+      this.save()
+    }
   }
 }
 

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import store from './store'
 
 class Session{
   //make sure there is only one instance
@@ -16,9 +15,9 @@ class Session{
   }
 
   logIn(url, user, pass, func){
-    this.url = url
+    this.url = url ? 'https://' + url + '.checkfront.com/' : null
     this.axios = require('axios').create({
-      baseURL: url ? url + 'api/3.0/' : '',
+      baseURL: this.url ? this.url + 'api/3.0/' : '',
       auth: {
         username: user ? user : '',
         password: pass ? pass : ''
@@ -33,6 +32,10 @@ class Session{
   }
 
   loggedIn(func){
+    if(!this.axios){
+      func(false)
+      return
+    }
     try{
       this.axios.get('ping').then(resp=>{
         func(resp.data.request.status === 'OK')
