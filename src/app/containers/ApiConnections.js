@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import store from '../utils/store'
-import Delete from 'material-ui/svg-icons/action/delete';
+import Delete from 'material-ui/svg-icons/action/delete'
+import {Table, TableBody, TableRow, TableRowColumn} from 'material-ui/Table'
+
 
 const style = {
   container:{
@@ -21,20 +23,20 @@ export default class ApiConnections extends Component{
     return(
       <div style={style.container}>
         <div className="container">
-          <h2>ApiConnections</h2>
-          <table>
-            <tbody>
+          <h1>ApiConnections</h1>
+          <Table style={{border:'1px solid #ddd'}}>
+            <TableBody displayRowCheckbox={false}>
               {this.state.urlList.map(url=>{
                 return store.getApiKey(url).map(key=>{
                   return (
-                    <tr key={key}>
-                      <td>
+                    <TableRow key={key}>
+                      <TableRowColumn style={{width: "30%",fontSize:"16px",border:'1px solid #ddd',}}>
                         {url}
-                      </td>
-                      <td>
+                      </TableRowColumn>
+                      <TableRowColumn style={{fontSize:"16px",border:'1px solid #ddd',}}>
                         {key}
-                      </td>
-                      <td>
+                      </TableRowColumn>
+                      <TableRowColumn style={{width:"75px",fontSize:"16px",border:'1px solid #ddd',}}>
                         <a href='#' onClick={e=>{
                           e.preventDefault()
                           store.removeApiKey(url, key)
@@ -42,13 +44,13 @@ export default class ApiConnections extends Component{
                         }}>
                           <Delete />
                         </a>
-                      </td>
-                    </tr>
+                      </TableRowColumn>
+                    </TableRow>
                   )
                 })
               })}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </div>
     )

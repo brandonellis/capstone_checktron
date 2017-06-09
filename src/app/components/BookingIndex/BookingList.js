@@ -128,7 +128,7 @@ export class BookingList extends Component{
               {pageSelect}
             </ul>
             <Bookings key={this.state.page} bookings={this.state.bookings}/>
-            <ul className="pagination pagination-sm">
+            <ul className="pagination pagination-sm" style={{paddingTop:"10px"}}>
               {pageSelect}
             </ul>
           </div>

@@ -8,7 +8,7 @@ export default class Dashboard extends Component{
     return(
       <div>
         <h2>Dashboard</h2>
-        <RaisedButton label="Log Out" style={{margin: 0}}
+        <RaisedButton label="Log Out"
           onTouchTap={(e=>{
             session.logOut()
             hashHistory.push('/')

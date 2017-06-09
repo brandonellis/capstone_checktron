@@ -99,18 +99,18 @@ export class Content extends Component{
   }
   date(){
     if(this.props.start === this.props.end){
-      return moment(this.props.start, 'YYYYMMDD').format('ddd MMM DD')
+      return moment(this.props.start, 'YYYYMMDD').format('dddd, MMMM Do YYYY')
     }else if(this.props.start.substring(0, 4) === this.props.end.substring(0, 4)){
       return(
-        moment(this.props.start, 'YYYYMMDD').format('ddd MMM DD') +
+        moment(this.props.start, 'YYYYMMDD').format('dddd, MMMM Do YYYY') +
         ' - ' +
-        moment(this.props.end, 'YYYYMMDD').format('ddd MMM DD, YYYY')
+        moment(this.props.end, 'YYYYMMDD').format('dddd, MMMM Do YYYY')
       )
     }else{
       return(
-        moment(this.props.start, 'YYYYMMDD').format('ddd MMM DD, YYYY') +
+        moment(this.props.start, 'YYYYMMDD').format('dddd, MMMM Do YYYY') +
         ' - ' + // &nbsp; shows up
-        moment(this.props.end, 'YYYYMMDD').format('ddd MMM DD, YYYY')
+        moment(this.props.end, 'YYYYMMDD').format('dddd, MMMM Do YYYY')
       )
     }
   }
@@ -125,7 +125,7 @@ export class Content extends Component{
       )
     }else if(this.state.items.length > 0){
       return(
-        <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto'}} fixedHeader={false}>
+        <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto', border:'1px solid #ddd',}} fixedHeader={false}>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow style={{backgroundColor: "#eee"}}>
               <TableHeaderColumn style={style.thCol1}>Item</TableHeaderColumn>
@@ -158,12 +158,14 @@ export class Content extends Component{
                     >
                       <Image image={item.image} giftCert={item.giftCert} />
                       <div style={{display: 'inline-block', paddingLeft: 6, paddingBottom: 4, color: '#000'}}>
-                        <h2 style={{marginTop: 5, marginBottom: 0}}>{item.name}</h2>
+                        <h2 style={{marginTop: 5, marginBottom: 0,fontSize:"17px",}}>{item.name}</h2>
                         <em>{item.sku}</em>
                       </div>
                     </a>
                   </TableRowColumn>
-                  <TableRowColumn style={style.col2}>{price}</TableRowColumn>
+                  <TableRowColumn style={style.col2}>
+                      {price}
+                  </TableRowColumn>
                   <TableRowColumn style={style.col3}>
                     <div className={'ct-item-status ' + item.status}>
                       {item.avail}

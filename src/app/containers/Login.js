@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import session from '../utils/session'
 import store from '../utils/store'
 import AutoComplete from 'material-ui/AutoComplete'
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Table, TableBody, TableRow, TableRowColumn} from 'material-ui/Table';
 
 const style = {
   content: {
@@ -22,22 +22,24 @@ const style = {
     border: 'none'
   },
   baseURL: {
-    width: "15%",
+    width: "200px",
   },
   endURL: {
     border: 'none',
-    fontSize: '16px',
     textAlign:'right',
     paddingRight: '1px',
     paddingLeft:'1px',
     width:'100px',
+    fontSize:"16px",
+    color: "#6d6d6d",
   },
   colText: {
     border: 'none',
-    fontSize: '16px',
     paddingRight: '1px',
     paddingLeft: '1px',
-    width: '25%',
+    width: '80px',
+    fontSize:"16px",
+    color: "#6d6d6d",
   },
   col: {
     border: 'none',
@@ -92,7 +94,7 @@ export default class Login extends Component{
   render(){
     return(
       <div style={style.content}>
-        <div className='container' style={{paddingTop: 40, width: "60%"}}>
+        <div className='container' style={{paddingTop: "40", width: "500px"}}>
           <Paper zDepth={2}>
             <Divider />
             <div style={{height:"75px",position:"relative",backgroundColor:"#f8f8f8",borderBottom:"1px solid #e5e5e5"}}>
@@ -106,10 +108,9 @@ export default class Login extends Component{
                 </span>
               }</h2>
             </div>
-            <div style={{padding: '0 20px'}}>
+            <div style={{padding: "0 20px",fontWeight:"bold"}}>
               <Table style={style.table}>
               <TableBody displayRowCheckbox={false}>
-
                 <TableRow style={style.baseURL} displayBorder={false} selectable={false}>
                   <TableRowColumn style={style.colText}>Base URL</TableRowColumn>
                   <TableRowColumn style={style.col}>

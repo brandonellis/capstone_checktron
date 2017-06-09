@@ -7,7 +7,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import TextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton'
 
 import {time12To24, time24To12, timeAdd, timeVal, mapObject} from '../../../utils/helper'
 import {getItemSlip} from '../../../utils/apiHelper'
@@ -153,8 +153,8 @@ export default class PerTime extends Component{
     if(this.state.loading)
       getItemSlip(this.state.item_id, this.state.start_date, null, this.state.start_time, this.state.item.len != 0 ? null : this.state.end_time, null, this.state.param, this.setItem.bind(this))
     return(
-      <div>
-        <div className={'ct-item-status ' + this.state.item.rate.status}>
+      <div style={{position:'relative',marginRight:'auto',marginLeft:'auto',}}>
+        <div className={'ct-item-status ' + this.state.item.rate.status} style={{width:"150px",position:'relative',marginRight:"auto",marginLeft:"auto",}}>
           {this.state.item.rate.summary.title}
         </div>
         {this.date()}
@@ -162,17 +162,27 @@ export default class PerTime extends Component{
         {this.endTime()}
         {this.param()}
         {this.summary()}
-        <FlatButton
-          label="Cancel"
-          primary={true}
-          onTouchTap={this.props.close}
-        />
-        <FlatButton
-          label="Submit"
-          primary={true}
-          disabled={this.state.item.rate.status !== 'AVAILABLE'}
-          onTouchTap={()=>hashHistory.push('booking_form?slip=' + this.state.item.rate.slip)}
-        />
+        <div style={{paddingTop:'10px',width:'200px',position:'relative',marginRight:'auto',marginLeft:'auto',}}>
+          <table style={{displayBorder:'none'}}>
+            <tr style={{border:'none', borderCollapse:'collapse',}}>
+              <td>
+                <RaisedButton
+                    label="Cancel"
+                    primary={true}
+                    onTouchTap={this.props.close}
+                />
+              </td>
+              <td>
+                <RaisedButton
+                    label="Submit"
+                    primary={true}
+                    disabled={this.state.item.rate.status !== 'AVAILABLE'}
+                    onTouchTap={()=>hashHistory.push('booking_form?slip=' + this.state.item.rate.slip)}
+                />
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     )
   }

@@ -29,7 +29,7 @@ const style = {
   },
   itemTableHead: {
     textAlign: "center",
-    backgroundColor: "#efeff0"
+    backgroundColor: "#efeff0",
   },
   subtotalRight: {
     textAlign: "right",
@@ -37,12 +37,13 @@ const style = {
   },
   col: {
     borderStyle: 'none',
+    borderBottom:'1px solid #ddd',
   },
   col3: {
     borderStyle: 'none',
     textAlign: 'right',
     width: '1%',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
   },
   formTitle: {
       fontSize: '25px',
@@ -87,7 +88,7 @@ export class Booking extends Component {
       <div style={style.content} key={this.state.session.id}>
         <div style={style.container} className='container'>
             <h1>Order Summary</h1>
-          <table>
+          <table style={{border:'1px solid #ddd',}}>
             <BookingTableHead />
             <BookingTableItems session={this.state.session} />
             <CartTotal session={this.state.session} />

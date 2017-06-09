@@ -27,7 +27,6 @@ const style = {
     fontWeight: 'bold',
     textAlign: 'center',
     color: "rgb(44, 151, 222)",
-
   },
 }
 export default class BookingDetails extends Component {

@@ -44,11 +44,13 @@ export class App extends Component{
       <MuiThemeProvider muiTheme={
         getMuiTheme({
           palette: {
-            //some text
             primary1Color: blue500,
-            //datepicker background
             primary2Color: blue500,
           },
+          raisedButton: {
+            color: blue500,
+            textColor: 'white',
+          }
         })
       }>
         <div>
