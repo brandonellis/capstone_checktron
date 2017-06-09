@@ -15,8 +15,6 @@ const modifierKey = mac ? '&#8984;' : 'Ctrl + '
 const styles = {
 
 }
-
-//todo remove this and the conditions
 var remote
 try{
   remote = require('electron').remote

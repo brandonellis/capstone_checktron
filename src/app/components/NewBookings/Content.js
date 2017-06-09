@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
 //import {render} from 'react-dom'
 import BookingDetails from './BookingDetails'
 import {getItemList} from '../../utils/apiHelper'
@@ -201,7 +201,7 @@ export class Content extends Component{
     return(
       <div style={style.container}>
         <div style={style.content}>
-          <h1 style={{fontWeight: "300", color: "#48535e", paddingBottom: "10px"}}>
+          <h1>
             New Booking:
             &nbsp;&nbsp;
             {this.date()}

@@ -51,7 +51,7 @@ export class Sidebar extends Component{
   render(){
     return(
       <div style={style.sidebar}>
-        <h2 style={{fontWeight: 'bolder', fontSize: '20px'}}>Search</h2>
+        <h2>Search</h2>
         <label style={style.labels}>Category</label>
         <CategorySelect
           key={this.props.category}

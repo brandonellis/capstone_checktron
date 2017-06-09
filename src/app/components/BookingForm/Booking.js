@@ -81,18 +81,12 @@ export class Booking extends Component {
     getSession(this.props.slip, this.state.session.id, (session=>{this.setState({session: session})}).bind(this))
   }
 
-  //booking form
+  //Booking Form
   render() {
     return (
       <div style={style.content} key={this.state.session.id}>
         <div style={style.container} className='container'>
-          {/*
-          <div>
-            <h2>Slip={this.props.slip}</h2>
-            <h2>Session={this.state.session.id}</h2>
-          </div>
-          */}
-            <p style={style.orderTitle}>Order Summary</p>
+            <h1>Order Summary</h1>
           <table>
             <BookingTableHead />
             <BookingTableItems session={this.state.session} />
@@ -123,8 +117,7 @@ class BookingTableHead extends Component {
     }
 }
 
-//TODO: Fill this in with the actual values.
-//displays the items in the 'cart'
+//Displays the items in the 'cart'
 class BookingTableItems extends Component {
   render() {
     var items = this.props.session.item
@@ -158,7 +151,7 @@ class BookingTableItems extends Component {
   }
 }
 
-//displays the amount owed by the customer
+//Displays the amount owed by the customer
 class CartTotal extends Component {
   render() {
     var session = this.props.session
@@ -215,8 +208,6 @@ class Items extends React.Component {
   }
 
   createInput(key, input, r) {
-      //TODO: Function to ensure all requirements have been met
-
       var required = input.define.required
       required &= typeof this.state.form[key] !== "string" || this.state.form[key] === ""
       r.incomplete |= required
@@ -235,7 +226,6 @@ class Items extends React.Component {
                       fullWidth={true}
                       floatingLabelStyle={{color: "rgb(44, 151, 222)"}}
                       onChange = {((e)=>this.handleInput(e, e.target.value, key)).bind(this)}
-                      //floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
                   />
               )
               break
@@ -278,7 +268,7 @@ class Items extends React.Component {
       <div style={{marginTop:40}}>
         <Paper zDepth={2}>
           <div style={{padding:20}}>
-            <p style={style.formTitle}>Customer Form</p>
+            <h1 style={{textAlign:'center'}}>Customer Form</h1>
                 <div style={style.formContainer}>
                     <ul>
                       {mapObject(this.state.bookingForm, (key, value)=>{
