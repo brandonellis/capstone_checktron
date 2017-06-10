@@ -132,7 +132,7 @@ export default class PerNight extends Component{
       getItemSlip(this.state.item_id, this.state.start_date, this.state.end_date, null, null, null, this.state.param, this.setItem.bind(this))
     return(
       <div>
-        <div className={'ct-item-status ' + this.state.item.rate.status} style={{width:"150px",position:'relative',marginRight:"auto",marginLeft:"auto",}}>
+        <div className={'ct-item-status ' + this.state.item.rate.status} style={{width:"150px",position:'relative',marginRight:"auto",marginLeft:"auto",marginTop:'10px',}}>
           {this.state.item.rate.summary.title}
         </div>
         {this.startDate()}

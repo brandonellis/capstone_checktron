@@ -120,7 +120,7 @@ export default class TimeSlots extends Component{
       getItemSlip(this.state.item_id, this.state.start_date, null, null, null, this.state.timeslot, this.state.param, this.setItem.bind(this))
     return(
       <div>
-        <div className={'ct-item-status ' + this.state.item.rate.status} style={{width:"150px",position:'relative',marginRight:"auto",marginLeft:"auto",}}>
+        <div className={'ct-item-status ' + this.state.item.rate.status} style={{width:"150px",position:'relative',marginRight:"auto",marginLeft:"auto",marginTop:'10px',}}>
           {this.state.item.rate.summary.title}
         </div>
         {this.date()}

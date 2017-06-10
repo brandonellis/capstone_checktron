@@ -41,6 +41,7 @@ const style = {
   },
   col3: {
     borderStyle: 'none',
+    borderBottom:'1px solid #ddd',
     textAlign: 'right',
     width: '1%',
     whiteSpace: 'nowrap',

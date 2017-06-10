@@ -16,18 +16,36 @@ import GiftCertificate from './BookItem/GiftCertificate'
 
 const style = {
   center: {
-    marginTop: 0,
-    marginRight: 'auto',
-    marginBottom: 0,
-    marginLeft: 'auto',
+    margin: '0',
+    position: 'relative',
+    top: '0px',
+    left:'0px',
+    right:'25px',
+    width: 'auto',
+    marginLeft:'-24px',
+    marginRight: '-24px',
     display: 'block',
     whiteSpace: 'pre-wrap',
+    padding: '0px !important',
   },
   itemName: {
     fontWeight: 'bold',
+    color: 'white',
+    position: 'relative',
+    margin: '10px',
     textAlign: 'center',
-    color: "rgb(44, 151, 222)",
   },
+  titleBar: {
+    width: '100%',
+    height: '50px',
+    borderStyle: 'solid',
+    borderColor: 'rgb(44, 151, 222)',
+    backgroundColor: 'rgb(44, 151, 222)',
+    textAlign: 'center'
+  },
+  formContent: {
+    paddingLeft: '15px',
+  }
 }
 export default class BookingDetails extends Component {
   constructor(props){
@@ -135,8 +153,8 @@ export default class BookingDetails extends Component {
               {this.state.item.name}
             </h2>
           </div>
-          {this.childSelect()}
-          <div key={this.state.child.item_id}>
+          <div key={this.state.child.item_id} style={style.formContent}>
+            {this.childSelect()}
             {this.state.child && this.book()}
           </div>
         </div>

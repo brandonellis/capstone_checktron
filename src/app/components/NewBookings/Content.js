@@ -65,6 +65,10 @@ const style = {
   tableHeader: {
     fontSize: "24px"
   },
+  bookingDetailsWindow: {
+    margin: '0px',
+    padding: '0px',
+  }
 }
 
 export class Content extends Component{
@@ -186,20 +190,7 @@ export class Content extends Component{
     }
   }
   render(){
-
-    const actions = false/* [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose.bind(this)}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onTouchTap={this.handleClose.bind(this)}
-      />,
-    ]
-    */
+    const actions = false
     return(
       <div style={style.container}>
         <div style={style.content}>
@@ -217,7 +208,7 @@ export class Content extends Component{
           onRequestClose={this.handleClose.bind(this)}
           autoScrollBodyContent={true}
         >
-          <BookingDetails
+          <BookingDetails style={style.bookingDetailsWindow}
             item={this.state.item}
             start_date={this.props.start}
             end_date={this.props.end}

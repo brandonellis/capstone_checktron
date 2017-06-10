@@ -154,7 +154,7 @@ export default class PerTime extends Component{
       getItemSlip(this.state.item_id, this.state.start_date, null, this.state.start_time, this.state.item.len != 0 ? null : this.state.end_time, null, this.state.param, this.setItem.bind(this))
     return(
       <div style={{position:'relative',marginRight:'auto',marginLeft:'auto',}}>
-        <div className={'ct-item-status ' + this.state.item.rate.status} style={{width:"150px",position:'relative',marginRight:"auto",marginLeft:"auto",}}>
+        <div className={'ct-item-status ' + this.state.item.rate.status} style={{width:"150px",position:'relative',marginRight:"auto",marginLeft:"auto",marginTop:'10px',}}>
           {this.state.item.rate.summary.title}
         </div>
         {this.date()}
