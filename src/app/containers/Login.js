@@ -161,7 +161,7 @@ export default class Login extends Component{
                     if(loggedIn){
                       store.setAuth(this.state.url, this.state.apiKey, this.state.apiSecret)
                       this.setState({error: undefined})
-                      hashHistory.push('dashboard')
+                      hashHistory.push('booking')
                     }
                     else
                       this.setState({error: 'Connection to API Failed'})
