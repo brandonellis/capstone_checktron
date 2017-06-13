@@ -13,11 +13,19 @@ const style = {
     bottom: 0,
     right: 0
   },
-  bookingTableHeader: {
-    fontWeight: "300",
-    color: "#48535e",
-    paddingTop: "8px",
-    paddingBottom: "1px",
+  //style pagination <a> links into button styles
+  pageButtons:{
+    display: "block",
+    width: "33px",
+    height: "33px",
+    textAlign: "center",
+    borderRadius: "5px",
+    borderColor: "transparent",
+    backgroundColor: "#ddd",
+    color: "black",
+    paddingRight: "10px",
+    margin: "2px",
+    fontSize: "16px",
   }
 }
 
@@ -60,8 +68,7 @@ export class BookingList extends Component{
         className={1 < this.state.page ? '' : 'disabled'}
         key='prev'
       >
-        <a
-          href="#"
+        <a style={style.pageButtons} href="#"
           onClick={
             e=>{
               e.preventDefault()
@@ -81,8 +88,7 @@ export class BookingList extends Component{
           key={i + 'page'}
           className={i == this.state.page?'active':''}
         >
-        <a
-          href='#'
+        <a style={style.pageButtons} href='#'
           onClick={
             (page=>{return e=>{
               e.preventDefault()
@@ -97,8 +103,7 @@ export class BookingList extends Component{
         className={this.state.page < this.state.pages ? '' : 'disabled'}
         key='next'
       >
-        <a
-          href="#"
+        <a style={style.pageButtons} href="#"
           onClick={
             e=>{
               e.preventDefault()
@@ -115,18 +120,18 @@ export class BookingList extends Component{
     return(
       <div style={style.container}>
         <div className="container">
-          <h1 style={style.bookingTableHeader}>
-            Booking Index{/*:
-            &nbsp;&nbsp;
-            {this.date()}*/}
+          <h1 style={{marginBottom: "1px"}}>
+            Booking Index
           </h1>
-          <ul className="pagination pagination-sm">
-            {pageSelect}
-          </ul>
-          <Bookings key={this.state.page} bookings={this.state.bookings}/>
-          <ul className="pagination pagination-sm">
-            {pageSelect}
-          </ul>
+          <div style={{textAlign: "center"}}>
+            <ul className="pagination pagination-sm">
+              {pageSelect}
+            </ul>
+            <Bookings key={this.state.page} bookings={this.state.bookings}/>
+            <ul className="pagination pagination-sm" style={{paddingTop:"10px"}}>
+              {pageSelect}
+            </ul>
+          </div>
         </div>
       </div>
     )

@@ -41,6 +41,8 @@ export default class Booking extends Component{
       }).bind(this))
     }).bind(this))
   }
+
+  //Invoice Form
   render(){
     if(!this.state.booking || !this.state.company || !this.state.policy) {
       return<div />

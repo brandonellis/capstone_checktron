@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
 //import {render} from 'react-dom'
 import BookingDetails from './BookingDetails'
 import {getItemList} from '../../utils/apiHelper'
@@ -65,6 +65,10 @@ const style = {
   tableHeader: {
     fontSize: "24px"
   },
+  bookingDetailsWindow: {
+    margin: '0px',
+    padding: '0px',
+  }
 }
 
 export class Content extends Component{
@@ -99,18 +103,18 @@ export class Content extends Component{
   }
   date(){
     if(this.props.start === this.props.end){
-      return moment(this.props.start, 'YYYYMMDD').format('ddd MMM DD')
+      return moment(this.props.start, 'YYYYMMDD').format('dddd, MMMM Do YYYY')
     }else if(this.props.start.substring(0, 4) === this.props.end.substring(0, 4)){
       return(
-        moment(this.props.start, 'YYYYMMDD').format('ddd MMM DD') +
+        moment(this.props.start, 'YYYYMMDD').format('dddd, MMMM Do YYYY') +
         ' - ' +
-        moment(this.props.end, 'YYYYMMDD').format('ddd MMM DD, YYYY')
+        moment(this.props.end, 'YYYYMMDD').format('dddd, MMMM Do YYYY')
       )
     }else{
       return(
-        moment(this.props.start, 'YYYYMMDD').format('ddd MMM DD, YYYY') +
+        moment(this.props.start, 'YYYYMMDD').format('dddd, MMMM Do YYYY') +
         ' - ' + // &nbsp; shows up
-        moment(this.props.end, 'YYYYMMDD').format('ddd MMM DD, YYYY')
+        moment(this.props.end, 'YYYYMMDD').format('dddd, MMMM Do YYYY')
       )
     }
   }
@@ -125,7 +129,7 @@ export class Content extends Component{
       )
     }else if(this.state.items.length > 0){
       return(
-        <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto'}} fixedHeader={false}>
+        <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto', border:'1px solid #ddd',}} fixedHeader={false}>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow style={{backgroundColor: "#eee"}}>
               <TableHeaderColumn style={style.thCol1}>Item</TableHeaderColumn>
@@ -158,12 +162,14 @@ export class Content extends Component{
                     >
                       <Image image={item.image} giftCert={item.giftCert} />
                       <div style={{display: 'inline-block', paddingLeft: 6, paddingBottom: 4, color: '#000'}}>
-                        <h2 style={{marginTop: 5, marginBottom: 0}}>{item.name}</h2>
+                        <h2 style={{marginTop: 5, marginBottom: 0,fontSize:"17px",}}>{item.name}</h2>
                         <em>{item.sku}</em>
                       </div>
                     </a>
                   </TableRowColumn>
-                  <TableRowColumn style={style.col2}>{price}</TableRowColumn>
+                  <TableRowColumn style={style.col2}>
+                      {price}
+                  </TableRowColumn>
                   <TableRowColumn style={style.col3}>
                     <div className={'ct-item-status ' + item.status}>
                       {item.avail}
@@ -184,24 +190,11 @@ export class Content extends Component{
     }
   }
   render(){
-
-    const actions = false/* [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose.bind(this)}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onTouchTap={this.handleClose.bind(this)}
-      />,
-    ]
-    */
+    const actions = false
     return(
       <div style={style.container}>
         <div style={style.content}>
-          <h1 style={{fontWeight: "300", color: "#48535e", paddingBottom: "10px"}}>
+          <h1>
             New Booking:
             &nbsp;&nbsp;
             {this.date()}
@@ -215,7 +208,7 @@ export class Content extends Component{
           onRequestClose={this.handleClose.bind(this)}
           autoScrollBodyContent={true}
         >
-          <BookingDetails
+          <BookingDetails style={style.bookingDetailsWindow}
             item={this.state.item}
             start_date={this.props.start}
             end_date={this.props.end}

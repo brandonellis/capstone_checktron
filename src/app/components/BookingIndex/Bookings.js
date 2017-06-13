@@ -52,7 +52,7 @@ export default class Bookings extends React.Component{
   render(){
     setInterval(function(){ this.reload; }, 3000);
     return(
-      <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto'}} fixedHeader={false}>
+      <Table style={{maxWidth: 1365, marginBottom: 20, tableLayout: 'auto',border:'1px solid #ddd',}} fixedHeader={false}>
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow style={{backgroundColor: "#eee"}}>
             <TableHeaderColumn style={style.tableHeader}>Booking</TableHeaderColumn>
