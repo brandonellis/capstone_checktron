@@ -30,7 +30,7 @@ const style = {
   },
   itemName: {
     fontWeight: 'bold',
-    color: 'white',
+    color: '#ffffff',
     position: 'relative',
     margin: '10px',
     textAlign: 'center',

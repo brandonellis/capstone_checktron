@@ -25,7 +25,7 @@ export default {
     float: 'left',
   },
   navbarText: {
-    color: 'white',
+    color: '#ffffff',
     marginTop: 19,
     fontSize: 14
   },

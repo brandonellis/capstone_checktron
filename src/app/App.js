@@ -49,7 +49,7 @@ export class App extends Component{
           },
           raisedButton: {
             color: blue500,
-            textColor: 'white',
+            textColor: '#ffffff',
           }
         })
       }>

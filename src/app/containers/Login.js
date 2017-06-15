@@ -94,7 +94,7 @@ export default class Login extends Component{
   render(){
     return(
       <div style={style.content}>
-        <div className='container' style={{paddingTop: "40", width: "500px"}}>
+        <div className='container' style={{paddingTop: 40, width: "500px"}}>
           <Paper zDepth={2}>
             <Divider />
             <div style={{height:"75px",position:"relative",backgroundColor:"#f8f8f8",borderBottom:"1px solid #e5e5e5"}}>
