@@ -164,23 +164,25 @@ export default class PerTime extends Component{
         {this.summary()}
         <div style={{paddingTop:'10px',width:'200px',position:'relative',marginRight:'auto',marginLeft:'auto',}}>
           <table style={{displayBorder:'none'}}>
-            <tr style={{border:'none', borderCollapse:'collapse',}}>
-              <td>
-                <RaisedButton
-                    label="Cancel"
-                    primary={true}
-                    onTouchTap={this.props.close}
-                />
-              </td>
-              <td>
-                <RaisedButton
-                    label="Submit"
-                    primary={true}
-                    disabled={this.state.item.rate.status !== 'AVAILABLE'}
-                    onTouchTap={()=>hashHistory.push('booking_form?slip=' + this.state.item.rate.slip)}
-                />
-              </td>
-            </tr>
+            <tbody>
+              <tr style={{border:'none', borderCollapse:'collapse',}}>
+                <td>
+                  <RaisedButton
+                      label="Cancel"
+                      primary={true}
+                      onTouchTap={this.props.close}
+                  />
+                </td>
+                <td>
+                  <RaisedButton
+                      label="Submit"
+                      primary={true}
+                      disabled={this.state.item.rate.status !== 'AVAILABLE'}
+                      onTouchTap={()=>hashHistory.push('booking_form?slip=' + this.state.item.rate.slip)}
+                  />
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
