@@ -4,18 +4,14 @@ import Dropdown from './Dropdown'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
 import style from './style'
+import {remote, ipcRenderer} from 'electron'
 const path = require('path')
 
 const mac = process.platform === 'darwin'
 const modifierKey = mac ? '&#8984;' : 'Ctrl + '
 
 //todo remove this and the conditions
-var remote
-try{
-  remote = require('electron').remote
-}catch(e){
-  remote = false
-}
+
 function link(path){
   return e=>{
     e.preventDefault()
@@ -37,6 +33,10 @@ function close(e) {
   e.preventDefault()
   if(remote) remote.getCurrentWindow().close()
 }
+function help(e) {
+  e.preventDefault()
+  ipcRenderer.send('help', null);
+}
 
 export class LoginNavigation extends Component{
   render(){
@@ -54,10 +54,7 @@ export class LoginNavigation extends Component{
           </Dropdown>
         </div>
         <div style={style.navbarRight} className="ct-nav-win-icons">
-          <a href="#" onClick={(e)=>{
-            e.preventDefault()
-            alert('TODO: modal dialog with tabs [keybord shortcuts|TODO:think of more tabs]')
-          }}>
+          <a href="#" onClick={help}>
             <img style={style.winIcon} src="images/help.png" />
           </a>
           <a href="#" onClick={minimize}>

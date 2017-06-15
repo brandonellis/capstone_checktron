@@ -7,7 +7,9 @@ import Divider from 'material-ui/Divider'
 import {getCategoryNames} from '../../utils/apiHelper'
 import style from './style'
 import session from '../../utils/session'
-const path = require('path')
+import {remote, ipcRenderer} from 'electron'
+import path from 'path'
+import url from 'url'
 
 const mac = process.platform === 'darwin'
 const modifierKey = mac ? '&#8984;' : 'Ctrl + '
@@ -15,12 +17,14 @@ const modifierKey = mac ? '&#8984;' : 'Ctrl + '
 const styles = {
 
 }
+/*
 var remote
 try{
   remote = require('electron').remote
 }catch(e){
   remote = false
 }
+*/
 
 function minimize(e) {
   e.preventDefault()
@@ -36,6 +40,11 @@ function maximize(e) {
 function close(e) {
   e.preventDefault()
   if(remote) remote.getCurrentWindow().close()
+}
+
+function help(e) {
+  e.preventDefault()
+  ipcRenderer.send('help', null);
 }
 
 function link(path){
@@ -102,10 +111,7 @@ export class MainNavigation extends Component{
           }}>
             <img style={style.winIcon} src="images/logoff.png" />
           </a>
-          <a href="#" onClick={(e)=>{
-            e.preventDefault()
-            alert('TODO: modal dialog with tabs [keybord shortcuts|TODO:think of more tabs]')
-          }}>
+          <a href="#" onClick={help}>
             <img style={style.winIcon} src="images/help.png" />
           </a>
           <a href="#" onClick={minimize}>

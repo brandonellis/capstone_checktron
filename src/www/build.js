@@ -2,6 +2,16 @@ const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron')
 const path = require('path')
 const url = require('url')
 
+// help window
+ipcMain.on('help', (e, arg)=>{
+  var helpWindow = new BrowserWindow({ width: 800, height: 600 })
+  helpWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'man/help.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+  helpWindow.on('closed', () => { helpWindow = null})
+})
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
