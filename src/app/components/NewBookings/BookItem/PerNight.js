@@ -141,6 +141,7 @@ export default class PerNight extends Component{
         {this.summary()}
         <div style={{paddingTop:'10px',width:'200px',position:'relative',marginRight:'auto',marginLeft:'auto',}}>
           <table style={{displayBorder:'none'}}>
+            <tbody>
             <tr style={{border:'none', borderCollapse:'collapse',}}>
               <td>
                 <RaisedButton
@@ -158,6 +159,7 @@ export default class PerNight extends Component{
                 />
               </td>
             </tr>
+            </tbody>
           </table>
         </div>
       </div>
