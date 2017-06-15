@@ -1,21 +1,10 @@
-const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron')
+const {app, BrowserWindow, ipcMain, globalShortcut, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
 
-// help window
-ipcMain.on('help', (e, arg)=>{
-  var helpWindow = new BrowserWindow({ width: 800, height: 600 })
-  helpWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'man/help.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-  helpWindow.on('closed', () => { helpWindow = null})
-})
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
-let reactDevTools // *DEV*
+let win = null
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
@@ -41,6 +30,26 @@ function createWindow () {
     win = null
   })
 }
+let helpWindow = null
+function createHelpWindow(){
+  helpWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+  })
+  helpWindow.setMenu(null)
+  helpWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'man/help.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+  helpWindow.on('closed', () => { helpWindow = null})
+}
+
+ipcMain.on('help', (e, arg)=>{
+  if(helpWindow == null){
+    createHelpWindow()
+  }
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -64,5 +73,19 @@ app.on('activate', () => {
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+Menu.setApplicationMenu(Menu.buildFromTemplate([
+  {
+    label: "Checktron",
+    submenu: [
+      { label: "Quit", accelerator: "CmdOrCtrl+Q", click: function() { app.quit(); }}
+    ]
+  },
+  {
+    label: "Edit",
+    submenu: [
+      { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+      { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+      { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" }
+    ]
+  }
+]))
