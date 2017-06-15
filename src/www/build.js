@@ -6,6 +6,22 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let win = null
 function createWindow () {
+  Menu.setApplicationMenu(Menu.buildFromTemplate([
+    {
+      label: "Checktron",
+      submenu: [
+        { label: "Quit", accelerator: "CmdOrCtrl+Q", click: function() { app.quit(); }}
+      ]
+    },
+    {
+      label: "Edit",
+      submenu: [
+        { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+        { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+        { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" }
+      ]
+    }
+  ]))
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
@@ -29,6 +45,7 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+  //to copy and paste on mac the menu must be set
 }
 let helpWindow = null
 function createHelpWindow(){
@@ -72,20 +89,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-Menu.setApplicationMenu(Menu.buildFromTemplate([
-  {
-    label: "Checktron",
-    submenu: [
-      { label: "Quit", accelerator: "CmdOrCtrl+Q", click: function() { app.quit(); }}
-    ]
-  },
-  {
-    label: "Edit",
-    submenu: [
-      { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-      { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-      { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" }
-    ]
-  }
-]))
